@@ -1,0 +1,21 @@
+$amarillo_Lego: #FFBA08;
+$rojo_Lego: #D00000;
+$azulOscuro_Lego:#032B43;
+
+
+//-----------------------
+@import "../node_modules/bootstrap/scss/functions";
+@import "../node_modules/bootstrap/scss/variables";
+@import "../node_modules/bootstrap/scss/variables-dark";
+
+//codigo-----------------------
+$custom-colors: (
+    "yellowLego": $amarillo_Lego,
+    "redLego": $rojo_Lego,
+    "darkblueLego": $azulOscuro_Lego,
+);
+
+$theme-colors: map-merge($theme-colors, $custom-colors);
+//$padding: map-merge($padding, $custom-padding);
+
+@import "../node_modules/bootstrap/scss/bootstrap";

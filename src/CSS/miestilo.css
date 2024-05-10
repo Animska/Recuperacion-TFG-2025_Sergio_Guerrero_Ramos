@@ -1,0 +1,57 @@
+ *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Helvetica, sans-serif;
+}
+
+
+#pfp{
+    height: 40px;
+    width: 40px;
+    border-radius: 100%;
+}
+
+
+.text-light::hover{
+    color: lightgray;
+}
+
+#logo{
+    width: 100px;
+}
+#hero{
+    background-image: url(../IMAGES/decoracion_hero.png);
+    background-position: 0% -40%;
+    background-repeat: no-repeat;
+    background-size: contain;
+    max-height: 40%;
+    border-radius: 0 0 25% 25%
+}
+header{
+    background-image: url(../IMAGES/decoracion_hero.png);
+    background-position: 0% 60%;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#hero_text{
+    font-size: 5em;
+}
+
+.carousel-control-next,
+.carousel-control-prev {
+    width: 80px; /* Ajusta según sea necesario */
+    height: 80px; /* Ajusta según sea necesario */
+    border-radius: 50%; /* Hace que el botón sea un círculo perfecto */
+    
+}
+
+.nav-link{
+    text-decoration: underline 0.15em rgba(208, 0, 0, 0);
+    transition: text-decoration-color 300ms;
+}
+
+.nav-link:hover {
+    text-decoration-color: rgba(208, 0, 0, 1);
+}
