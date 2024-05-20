@@ -1,0 +1,84 @@
+CREATE DATABASE proyecto;
+USE proyecto;
+
+CREATE TABLE Usuarios (
+    ID_USER INT PRIMARY KEY AUTO_INCREMENT,
+    user VARCHAR(50),
+    password VARCHAR(50),
+    root BOOLEAN,
+    nombre VARCHAR(50),
+    apellidos VARCHAR(50),
+    poblacion VARCHAR(50),
+    provincia VARCHAR(50),
+    codigo_postal VARCHAR(10),
+    direccion VARCHAR(100),
+    pfp INT
+);
+
+CREATE TABLE Productos (
+    ID_PRODUCTO INT PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(100),
+    codigo VARCHAR(20),
+    tema VARCHAR(50),
+    num_piezas INT,
+    precio DECIMAL(10, 2),
+    tipo VARCHAR(20)
+);
+
+CREATE TABLE Pedidos (
+    ID_Pedido INT PRIMARY KEY AUTO_INCREMENT,
+    precio_total DECIMAL(10, 2),
+    fecha_envio DATE,
+    fecha_recibido DATE,
+    estado VARCHAR(50),
+    ID_usuario INT,
+    FOREIGN KEY (ID_usuario) REFERENCES Usuarios(ID_USER)
+);
+
+CREATE TABLE Detalle_pedidos (
+    ID_Detalle_Pedido INT PRIMARY KEY AUTO_INCREMENT,
+    ID_Pedido INT,
+    ID_PRODUCTO INT,
+    FOREIGN KEY (ID_Pedido) REFERENCES Pedidos(ID_Pedido),
+    FOREIGN KEY (ID_PRODUCTO) REFERENCES Productos(ID_PRODUCTO)
+);
+
+CREATE TABLE Wishlists (
+    ID_Wishlist INT PRIMARY KEY AUTO_INCREMENT,
+    ID_USER INT,
+    FOREIGN KEY (ID_USER) REFERENCES Usuarios(ID_USER)
+);
+
+CREATE TABLE Wishlist_detalle (
+    ID_Wishlist_Detalle INT PRIMARY KEY AUTO_INCREMENT,
+    ID_Wishlist INT,
+    ID_PRODUCTO INT,
+    FOREIGN KEY (ID_Wishlist) REFERENCES Wishlists(ID_Wishlist),
+    FOREIGN KEY (ID_PRODUCTO) REFERENCES Productos(ID_PRODUCTO)
+);
+
+
+
+
+INSERT INTO proyecto.productos (nombre, codigo, tema, num_piezas, precio, tipo)
+VALUES 
+    ('Coche de Carreras de Fórmula 1 McLaren 2023', '76919', 'Speed Champions', 245, 26.99, 'set'),
+    ('Mercedes-AMG F1 W12 E Performance y Mercedes-AMG Project One', '76909', 'Speed Champions', 564, 44.99, 'set'),
+    ('Safety Car de Aston Martin y AMR23', '76925', 'Speed Champions', 564, 49.99, 'set'),
+    ('Nissan Skyline GT-R (R34) de 2 Fast 2 Furious', '76917', 'Speed Champions', 245, 26.99, 'set'),
+    ('Coche de Carreras Audi S1 e-tron quattro', '76921', 'Speed Champions', 245, 26.99, 'set'),
+    ('Deportivo Ford Mustang Dark Horse', '76920', 'Speed Champions', 344, 26.99, 'set'),
+    ('Coches de Carreras BMW M4 GT3 y BMW M Hybrid V8', '76922', 'Speed Champions', 676, 49.99, 'set'),
+    ('Lamborghini Countach', '76908', 'Speed Champions', 262, 24.99, 'set'),
+    ('McLaren Solus GT y McLaren F1 LM', '76918', 'Speed Champions', 581, 44.99, 'set'),
+    ('Superdeportivo Lamborghini Lambo V12 Vision GT', '76923', 'Speed Champions', 230, 26.99, 'set'),
+    ('Máscara de Spider-Man', '76285', 'Marvel', 487, 69.99, 'set'),
+    ('Guantelete del Infinito', '76191', 'Marvel', 590, 89.99, 'set'),
+    ('Casco de Star-Lord', '76251', 'Marvel', 602, 79.99, 'set'),
+    ('X-Jet de los X-Men', '76281', 'Marvel', 359, 84.99, 'set'),
+    ('Figura para Construir: Duende Verde', '76284', 'Marvel', 471, 37.99, 'set'),
+    ('Armadura Robótica de Venom vs. Miles Morales', '76276', 'Marvel', 134, 14,99, 'set'),
+    ('Torre de los Vengadores', '76269', 'Marvel', 5201, 499.99, 'set'),
+    ('Daily Bugle', '76178', 'Marvel', 3789, 349.99, 'set'),
+    ('Nanoguantelete', '76223', 'Marvel', 675, 69.99, 'set'),
+    ('Hulkbuster', '76210', 'Marvel', 4049, 549.99, 'set');

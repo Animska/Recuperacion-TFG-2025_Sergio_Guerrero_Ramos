@@ -6,9 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="../JS/jquery-3.7.1.min.js"></script>
+    <script src="../JS/nav.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
     <link rel="stylesheet" href="../CSS/estilos.css" />
     <link rel="stylesheet" href="../CSS/miestilo.css" />
+    <script src="../NODE_MODULES/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 
 <body>
@@ -55,189 +57,7 @@
                 </div>
         </nav>
     </header>
-    <section id="hero" class="container-fluid bg-yellowLego py-4 mb-5 ">
-        <div class="row">
-            <div class="col d-flex justify-content-center align-items-center">
-                <div class="text-center  w-50  ">
-                    <h2 class="text-white fw-bolder text-wrap " id="hero_text">LOS MEJORES SETS DE LEGO AL MEJOR PRECIO
-                    </h2>
-                </div>
-            </div>
-        </div>
-        <div class="row my-4 pb-5 ">
-            <div class="col d-flex justify-content-center align-items-center ">
-                <a href="#" id="SETS" class="d-grid gap-2 col-2  m-5 text-decoration-none">
-                    <button class="btn btn-redLego fs-3  px-3 fw-bold " type="button">DESCUBRIR</button>
-                </a>
-            </div>
-        </div>
-    </section>
-    <section id="carousel" class="container my-5 ">
-        <div class="row">
-            <div class="col my-2 text-center ">
-                <h2 class="fw-bold fs-1 ">TUS TEMAS FAVORITOS</h2>
-            </div>
-        </div>
-        <div class="row position-relative ">
-            <div class="col-2 position-relative ">
-                <button class="carousel-control-prev bg-dark  top-50 start-50 translate-middle" type="button"
-                    data-bs-target="#carouselExample" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon text-black " aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-            </div>
-
-            <div class="col-8">
-                <div class="carousel-container position-relative w-100 rounded ">
-                    <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
-                        <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <a href="">
-                                    <img src="../IMAGES/banner_SW.png" class="d-block w-100 rounded" alt="...">
-                                </a>
-                            </div>
-                            <div class="carousel-item">
-                                <a href="">
-                                    <img src="../IMAGES/banner_MARVEL.png" class="d-block w-100 rounded" alt="...">
-                                </a>
-                            </div>
-                            <div class="carousel-item">
-                                <a href="">
-                                    <img src="../IMAGES/BANNER_SP.png" class="d-block w-100 rounded" alt="...">
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-
-                </div>
-            </div>
-
-            <div class="col-2 position-relative ">
-                <button class="carousel-control-next bg-dark  top-50 start-50 translate-middle " type="button"
-                    data-bs-target="#carouselExample" data-bs-slide="next">
-                    <span class="carousel-control-next-icon " aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
-            </div>
-    </section>
-    <section id="destacados" class="my-5 container ">
-        <div class="row">
-            <div class="col text-center ">
-                <h2 class="fw-bold fs-1">SETS DESTACADOS</h2>
-            </div>
-        </div>
-        <div class="row mb-5 my-2 ">
-            <div class="col d-flex justify-content-between ">
-                <div class="card p-3  position-relative " style="width: 30%;">
-                    <img src="../IMAGES/set01.webp" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title fw-bold text-uppercase">nombre del set</h5>
-                        <p class="card-text fw-bold">precio <span class="text-warning">oferta</span></p>
-                        <div class="botonCentrado  text-center mt-2 ">
-                            <a href="#" class="btn btn-redLego fw-bold d-inline-block mx-auto">Añadir al carrito</a>
-                        </div>
-                    </div>
-                    <span><i class="bi bi-heart position-absolute top-0 end-0 me-2 fs-3 text-primary " id="fav"></i></span>
-                </div>
-
-                <div class="card p-3  position-relative " style="width: 30%;">
-                    <img src="../IMAGES/set01.webp" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title fw-bold text-uppercase">nombre del set</h5>
-                        <p class="card-text fw-bold">precio <span class="text-warning">oferta</span></p>
-                        <div class="botonCentrado  text-center mt-2 ">
-                            <a href="#" class="btn btn-redLego fw-bold d-inline-block mx-auto">Añadir al carrito</a>
-                        </div>
-                    </div>
-                    <span><i class="bi bi-heart position-absolute top-0 end-0 me-2 fs-3 text-primary " id="fav"></i></span>
-                </div>
-
-                <div class="card p-3  position-relative " style="width: 30%;">
-                    <img src="../IMAGES/set01.webp" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title fw-bold text-uppercase">nombre del set</h5>
-                        <p class="card-text fw-bold">precio <span class="text-warning">oferta</span></p>
-                        <div class="botonCentrado  text-center mt-2 ">
-                            <a href="#" class="btn btn-redLego fw-bold d-inline-block mx-auto">Añadir al carrito</a>
-                        </div>
-                    </div>
-                    <span><i class="bi bi-heart position-absolute top-0 end-0 me-2 fs-3 text-primary " id="fav"></i></span>
-                </div>
-
-                
-        </div>
-
-    </section>
-    <section id="minifigs" class="bg-success my-5  py-3 ">
-    <div class="container text-light ">
-        <div class="row my-3 ">
-            <div class="col text-center ">
-                <H2 class="fw-bold fs-1">¿BUSCAS MINIFIGURAS?</H2>
-                <h3>Este es tu sitio entonces</h3>
-            </div>
-            <div class="row my-5 ">
-                <div class="col">
-                    <img src="../IMAGES/minifigs.png" alt="" srcset="" class="img-fluid ">
-                </div>
-            </div>
-            <div class="row d-flex justify-content-center ">
-                <a href="#" id="SETS" class="d-grid w-50  text-decoration-none">
-                    <button class="btn btn-redLego fs-3 px-3 fw-bold " type="button">BUSCAR MINIFIGURAS</button>
-                </a>
-            </div>
-        </div>
-    </div>
-    </section>
-
-    <section id="destacados" class="my-5 container ">
-        <div class="row">
-            <div class="col text-center ">
-                <h2 class="fw-bold fs-1">REGALOS POR MENOS DE 20€</h2>
-            </div>
-        </div>
-        <div class="row mb-5 my-2 ">
-            <div class="col d-flex justify-content-between ">
-                <div class="card p-3  position-relative " style="width: 30%;">
-                    <img src="../IMAGES/set20.webp" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title fw-bold text-uppercase">nombre del set</h5>
-                        <p class="card-text fw-bold">precio</p>
-                        <div class="botonCentrado  text-center mt-2 ">
-                            <a href="#" class="btn btn-redLego fw-bold d-inline-block mx-auto">Añadir al carrito</a>
-                        </div>
-                    </div>
-                    <span><i class="bi bi-heart position-absolute top-0 end-0 me-2 fs-3 text-primary " id="fav"></i></span>
-                </div>
-
-                <div class="card p-3  position-relative " style="width: 30%;">
-                    <img src="../IMAGES/set20.webp" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title fw-bold text-uppercase">nombre del set</h5>
-                        <p class="card-text fw-bold">precio</p>
-                        <div class="botonCentrado  text-center mt-2 ">
-                            <a href="#" class="btn btn-redLego fw-bold d-inline-block mx-auto">Añadir al carrito</a>
-                        </div>
-                    </div>
-                    <span><i class="bi bi-heart position-absolute top-0 end-0 me-2 fs-3 text-primary " id="fav"></i></span>
-                </div>
-
-                <div class="card p-3  position-relative " style="width: 30%;">
-                    <img src="../IMAGES/set20.webp" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title fw-bold text-uppercase">nombre del set</h5>
-                        <p class="card-text fw-bold">precio</p>
-                        <div class="botonCentrado  text-center mt-2 ">
-                            <a href="#" class="btn btn-redLego fw-bold d-inline-block mx-auto">Añadir al carrito</a>
-                        </div>
-                    </div>
-                    <span><i class="bi bi-heart position-absolute top-0 end-0 me-2 fs-3 text-primary " id="fav"></i></span>
-                </div>
-
-                
-        </div>
-
-    </section>
+    <section id="body"></section>
     <footer class="bg-darkblueLego mt-5 p-5 ">
         <div class="container text-light fw-bold ">
             <div class="row">
@@ -305,5 +125,4 @@
     </footer>
     <script src="../NODE_MODULES/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>

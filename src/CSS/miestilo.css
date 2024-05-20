@@ -55,3 +55,8 @@ header{
 .nav-link:hover {
     text-decoration-color: rgba(208, 0, 0, 1);
 }
+
+.image-container img {
+    height: 100%; /* Ajusta la altura de la imagen al contenedor */
+    object-fit: contain; /* Mantiene la proporción de la imagen y la recorta si es necesario */
+}
