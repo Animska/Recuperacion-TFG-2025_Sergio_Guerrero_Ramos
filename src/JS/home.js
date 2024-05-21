@@ -76,7 +76,67 @@ function cargarProductos2(){
 });
 }
 
+function loadProducts(theme) {
+    $.ajax({
+        url: '../PHP/getProductosCategoria.php',
+        type: 'POST',
+        data: { theme: theme },
+        success: function(response) {
+            let productosParse = JSON.parse(response);
+            $('#tema').html(theme);
+            $('#productos').empty();
+            try {
+                let productos = $('#productos')
+                $.each(productosParse, function (index, producto) {
+                    let productoString = '<div class="card p-3 position-relative m-2" style="width: 23%;">\n' +
+                                        '<div class="image-container" style="height: 200px; overflow: hidden;">\n' +
+                                        '<img src="../IMAGES/sets/' + producto.codigo + '.webp" class="card-img-top p-3 img-fluid" alt="..." style="height: 100%; width: 100%; object-fit: contain;">\n' +
+                                        '</div>\n' +
+                                        '<div class="card-body d-flex flex-column justify-content-between">\n' +
+                                        '    <h5 class="card-title fw-bold text-uppercase">' + producto.nombre + '</h5>\n' +
+                                        '    <h5 class="card-text fw-bold">' + producto.precio + ' €</h5>\n' +
+                                        '    <div class="botonCentrado text-center mt-2">\n' +
+                                        '        <a href="#" class="btn btn-redLego fw-bold d-inline-block mx-auto">Añadir al carrito</a>\n' +
+                                        '    </div>\n' +
+                                        '</div>\n' +
+                                        '<span><i class="bi bi-heart position-absolute top-0 end-0 me-2 fs-3 text-primary" id="fav"></i></span>\n' +
+                                        '</div>\n';
+    
+                    productos.append(productoString);
+                });
+            } catch (error) {
+                console.log("Error al parsear la respuesta JSON:", error);
+            }
+            
+            
+        },
+        error: function(xhr, status, error) {
+            console.error("Error loading products:", error);
+        }
+    });
+}
+
+
 $(function (){
     cargarProductos()
     cargarProductos2()
+
+    $('.carousel-link').on('click', function(event) {
+        let theme = $(this).data('theme');
+        $.ajax({
+            url: '../HTML/busqueda.html',
+            type: 'GET', 
+            success: function(response) {
+                $('#body').html(response);
+                $('#productos').html('');
+                loadProducts(theme);
+            },
+            error: function(xhr, status, error) {
+                console.error("Error loading search page:", error);
+            }
+        });
+    });
 })
+
+
+

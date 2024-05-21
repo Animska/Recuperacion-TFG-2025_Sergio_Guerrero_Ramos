@@ -7,8 +7,6 @@ function cargarProductos(){
         var productosParse = JSON.parse(respuesta);
         try {
             let productos = $('#productos')
-            productos.html('')
-            let contador=1
             $.each(productosParse, function (index, producto) {
                 let estadioString = '<div class="card p-3 position-relative m-2" style="width: 23%;">\n' +
                                     '<div class="image-container" style="height: 200px; overflow: hidden;">\n' +
@@ -25,7 +23,6 @@ function cargarProductos(){
                                     '</div>\n';
 
                 productos.append(estadioString);
-                contador++
             });
         } catch (error) {
             console.log("Error al parsear la respuesta JSON:", error);
@@ -40,3 +37,4 @@ function cargarProductos(){
 $(function (){
     cargarProductos()
 })
+

@@ -60,3 +60,7 @@ header{
     height: 100%; /* Ajusta la altura de la imagen al contenedor */
     object-fit: contain; /* Mantiene la proporción de la imagen y la recorta si es necesario */
 }
+
+.carousel-link{
+    cursor: pointer !important;
+}

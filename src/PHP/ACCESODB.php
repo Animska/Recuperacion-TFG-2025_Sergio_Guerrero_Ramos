@@ -84,4 +84,28 @@ Class BD{
         }
     }
 
+    public static function getProductosCat($categoria) {
+        try {
+            $sql="SELECT * FROM productos WHERE tema = ?";
+            $conn = self::conexion();
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("s", $categoria); // 's' especifica que el parámetro es una cadena (string)
+            // Ejecutar la consulta
+            $stmt->execute();
+            $result = $stmt->get_result();
+            if ($result->num_rows > 0) {
+                $productos = $result->fetch_all(MYSQLI_ASSOC); // Usa fetch_all para obtener todos los resultados y transformarlos en un array asociativo
+                return json_encode($productos);
+            } else {
+                return "0 resultados";
+            }
+        } catch (Exception $th) {
+            throw new Exception("Error al obtener Artistas: " . $th->getMessage());
+        }finally {
+            // Cerrar la declaración preparada y la conexión
+            $stmt->close();
+            $conn->close();
+        }
+    } 
+
 }
