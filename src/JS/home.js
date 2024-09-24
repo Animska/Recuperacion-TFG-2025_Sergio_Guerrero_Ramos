@@ -84,7 +84,7 @@ function loadProducts(theme) {
         success: function(response) {
             let productosParse = JSON.parse(response);
             $('#tema').html(theme);
-            $('#productos').empty();
+            $('#productos').html('');
             try {
                 let productos = $('#productos')
                 $.each(productosParse, function (index, producto) {
@@ -127,8 +127,7 @@ $(function (){
             url: '../HTML/busqueda.html',
             type: 'GET', 
             success: function(response) {
-                $('#body').html(response);
-                $('#productos').html('');
+                $('#body').html(response)
                 loadProducts(theme);
             },
             error: function(xhr, status, error) {
