@@ -2,8 +2,8 @@ function cargarProductos(){
     $.ajax({
     url: '../PHP/descubrir.php',
     type: 'POST',
-    data:{'pag':'cargada'},
     success: function (respuesta) {
+        console.log(respuesta)
         var productosParse = JSON.parse(respuesta);
         try {
             let productos = $('#productos')
@@ -35,8 +35,18 @@ function cargarProductos(){
     }
 });
 }
+//esta funcion es para solucionar un problema que tienen algunso navegadores que interpretan los elementos vacios de manera diferente, esto ignora elementos invisibles como espacios y saltos de linea
+function isEmpty( el ){
+    return !$.trim(el.html())
+}
 
 $(function (){
     cargarProductos()
+
+    if (isEmpty($('#productos'))) {
+        console.log('No se encontraron productos');
+        $('#productos').html('<h2>No se encontraron productos según este criterio</h2>');
+    }
+    
 })
 

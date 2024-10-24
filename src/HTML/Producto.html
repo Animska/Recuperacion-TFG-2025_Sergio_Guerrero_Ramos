@@ -24,8 +24,8 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div class="navbar-nav text-start fw-bolder fs-3 " id="navbar">
-                        <a id="DESCUBRIR" class="nav-link text-white ms-5 mx-3  " href="#">DESCUBRIR</a>
-                        <a id="FAQ" class="nav-link text-white mx-3" href="#">FAQ</a>
+                        <a id="DESCUBRIR" class="nav-link text-white ms-5 mx-3  " href="./index.html">DESCUBRIR</a>
+                        <a id="FAQ" class="nav-link text-white mx-3" href="#footer">FAQ</a>
                         <a id="SETS" class="nav-link text-white mx-3" href="#">SETS</a>
                         <a id="MINIFIGURAS" class="nav-link text-white mx-3" href="#">MINIFIGURAS</a>
                     </div>
@@ -59,22 +59,21 @@
     <section id="articulo" class="container my-5 ">
         <div class="row">
             <div class="col-8 p-5 ">
-                <img src="../IMAGES/set20.webp" alt="" class="img-fluid p-5 ">
+                <img src="../IMAGES/set20.webp" alt="" class="img-fluid p-5 " id="imagen_producto">
             </div>
             <div class="col">
                 <div class="producto my-4 mb-5 ">
-                    <h2 class="card-title fw-bold text-uppercase my-3   ">nombre del set</h2 >
-                    <h2 class="card-text fw-bold my-5 text-warning"><span id="precio_producto">00.00</span> €</h2>
-                    <div class="botonCentrado  text-center my-5  ">
+                    <h2 class="card-title fw-bold text-uppercase my-3" id="nombre_set"></h2 >
+                    <h2 class="card-text fw-bold my-5 text-warning"><span id="precio_producto"></span> €</h2>
+                    <div class="botonCentrado  text-center my-5">
                         <a href="#" class="btn btn-redLego fw-bold d-inline-block w-100  fs-4">Añadir al carrito</a>
                     </div>
                 </div>
                 <div class="datosProducto mt-5 ">
                     <ul class="list-unstyled fs-5  ">
-                        <li><i class="bi bi-puzzle-fill fs-3 "></i> <span id="n_piezas">999</span> PIEZAS</li>
-                        <li><i class="bi bi-person-walking fs-3 "> </i><span id="n_figuras">9</i></span> MINIFIGURAS</li>
-                        <li><i class="bi bi-hash fs-3 "></i> ARTICULO <span id="n_articulo">99999</span></li>
-                        <li><i class="bi bi-cake-fill fs-3 "></i> PARA MAYORES DE <span id="n_edad">99</span> AÑOS</li>
+                        <li><i class="bi bi-puzzle-fill fs-3 "></i> <span id="n_piezas"></span> PIEZAS</li>
+                        <li><i class="bi bi-hash fs-3 "></i> ARTICULO: <span id="n_articulo"></span></li>
+                        <li><i class="bi bi-cake-fill fs-3 "></i> TEMA:<span id="tema"></span></li>
                 </ul>
                 </div>
             </div>
@@ -88,44 +87,8 @@
                 <h2 class="fw-bold fs-1">DESCUBRE MAS SETS INCREIBLES</h2>
             </div>
         </div>
-        <div class="row mb-5 my-2 ">
-            <div class="col d-flex justify-content-between ">
-                <div class="card p-3  position-relative " style="width: 30%;">
-                    <img src="../IMAGES/set01.webp" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title fw-bold text-uppercase">nombre del set</h5>
-                        <p class="card-text fw-bold">precio <span class="text-warning">oferta</span></p>
-                        <div class="botonCentrado  text-center mt-2 ">
-                            <a href="#" class="btn btn-redLego fw-bold d-inline-block mx-auto">Añadir al carrito</a>
-                        </div>
-                    </div>
-                    <span><i class="bi bi-heart position-absolute top-0 end-0 me-2 fs-3 text-primary " id="fav"></i></span>
-                </div>
-
-                <div class="card p-3  position-relative " style="width: 30%;">
-                    <img src="../IMAGES/set01.webp" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title fw-bold text-uppercase">nombre del set</h5>
-                        <p class="card-text fw-bold">precio <span class="text-warning">oferta</span></p>
-                        <div class="botonCentrado  text-center mt-2 ">
-                            <a href="#" class="btn btn-redLego fw-bold d-inline-block mx-auto">Añadir al carrito</a>
-                        </div>
-                    </div>
-                    <span><i class="bi bi-heart position-absolute top-0 end-0 me-2 fs-3 text-primary " id="fav"></i></span>
-                </div>
-
-                <div class="card p-3  position-relative " style="width: 30%;">
-                    <img src="../IMAGES/set01.webp" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title fw-bold text-uppercase">nombre del set</h5>
-                        <p class="card-text fw-bold">precio <span class="text-warning">oferta</span></p>
-                        <div class="botonCentrado  text-center mt-2 ">
-                            <a href="#" class="btn btn-redLego fw-bold d-inline-block mx-auto">Añadir al carrito</a>
-                        </div>
-                    </div>
-                    <span><i class="bi bi-heart position-absolute top-0 end-0 me-2 fs-3 text-primary " id="fav"></i></span>
-                </div>
-
+        <div class="row mb-5 my-2">
+            <div class="col d-flex justify-content-between" id="destacadosEnProducto">
                 
         </div>
 
@@ -210,6 +173,7 @@
         </div>
     </footer>
     <script src="../NODE_MODULES/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../JS/producto.js"></script>
 </body>
 
 </html>

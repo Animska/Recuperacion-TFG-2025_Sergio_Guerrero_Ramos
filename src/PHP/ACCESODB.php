@@ -30,7 +30,30 @@ Class BD{
                 return "0 resultados";
             }
         } catch (Exception $th) {
-            throw new Exception("Error al obtener Artistas: " . $th->getMessage());
+            throw new Exception("Error al obtener Productos: " . $th->getMessage());
+        }finally {
+            // Cerrar la declaración preparada y la conexión
+            $stmt->close();
+            $conn->close();
+        }
+    }
+
+    public static function getMinifiguras() {
+        try {
+            $sql="SELECT * FROM productos where tipo = 'minfig'";
+            $conn = self::conexion();
+            $stmt = $conn->prepare($sql);
+            // Ejecutar la consulta
+            $stmt->execute();
+            $result = $stmt->get_result();
+            if ($result->num_rows > 0) {
+                $artistas = $result->fetch_all(MYSQLI_ASSOC); // Usa fetch_all para obtener todos los resultados y transformarlos en un array asociativo
+                return json_encode($artistas);
+            } else {
+                return "0 resultados";
+            }
+        } catch (Exception $th) {
+            throw new Exception("Error al obtener Productos: " . $th->getMessage());
         }finally {
             // Cerrar la declaración preparada y la conexión
             $stmt->close();
@@ -40,7 +63,7 @@ Class BD{
     
     public static function get3Productos() {
         try {
-            $sql="SELECT * FROM Productos ORDER BY RAND() LIMIT 3;";
+            $sql="SELECT * FROM Productos WHERE tipo = 'set' ORDER BY RAND() LIMIT 3";
             $conn = self::conexion();
             $stmt = $conn->prepare($sql);
             // Ejecutar la consulta
@@ -53,7 +76,7 @@ Class BD{
                 return "0 resultados";
             }
         } catch (Exception $th) {
-            throw new Exception("Error al obtener Artistas: " . $th->getMessage());
+            throw new Exception("Error al obtener Productos: " . $th->getMessage());
         }finally {
             // Cerrar la declaración preparada y la conexión
             $stmt->close();
@@ -63,7 +86,7 @@ Class BD{
 
     public static function get3ProductosUnder() {
         try {
-            $sql="SELECT * FROM Productos WHERE precio < 30.00 ORDER BY RAND() LIMIT 3;";
+            $sql="SELECT * FROM Productos WHERE precio < 30.00 && tipo = 'set' ORDER BY RAND() LIMIT 3;";
             $conn = self::conexion();
             $stmt = $conn->prepare($sql);
             // Ejecutar la consulta
@@ -76,7 +99,7 @@ Class BD{
                 return "0 resultados";
             }
         } catch (Exception $th) {
-            throw new Exception("Error al obtener Artistas: " . $th->getMessage());
+            throw new Exception("Error al obtener Productos: " . $th->getMessage());
         }finally {
             // Cerrar la declaración preparada y la conexión
             $stmt->close();
@@ -100,12 +123,54 @@ Class BD{
                 return "0 resultados";
             }
         } catch (Exception $th) {
-            throw new Exception("Error al obtener Artistas: " . $th->getMessage());
+            throw new Exception("Error al obtener los productos de esta categoria: " . $th->getMessage());
         }finally {
             // Cerrar la declaración preparada y la conexión
             $stmt->close();
             $conn->close();
         }
     } 
+
+    public static function getProductoID($id) {
+        try {
+            // Consulta para seleccionar un producto por su código
+            $sql = "SELECT * FROM productos WHERE codigo = ?";
+            $conn = self::conexion();
+            $stmt = $conn->prepare($sql);
+            
+            // 's' especifica que el parámetro es una cadena (string)
+            $stmt->bind_param("s", $id);
+            
+            // Ejecutar la consulta
+            $stmt->execute();
+            $result = $stmt->get_result();
+            
+            // Verificar si hay resultados
+            if ($result->num_rows > 0) {
+                // Obtener solo una fila (la primera)
+                $producto = $result->fetch_assoc();
+                return json_encode($producto);  // Devuelve el producto como JSON
+            } else {
+                // Si no hay resultados, devolver un JSON indicando esto
+                return json_encode(["message" => "0 resultados"]);
+            }
+        } catch (Exception $th) {
+            // Devolver el mensaje de error en formato JSON
+            return json_encode(["error" => "Error al obtener el producto: " . $th->getMessage()]);
+        } finally {
+            // Asegurarse de cerrar la declaración preparada y la conexión
+            if (isset($stmt)) {
+                $stmt->close();
+            }
+            if (isset($conn)) {
+                $conn->close();
+            }
+        }
+    }
+    
+    
+
+
+
 
 }
