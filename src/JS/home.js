@@ -82,6 +82,7 @@ function loadProductsTheme(theme) {
         type: 'POST',
         data: { theme: theme },
         success: function(response) {
+            console.log(response)
             let productosParse = JSON.parse(response);
             $('#tema').html(theme);
             $('#productos').html('');
@@ -116,12 +117,12 @@ function loadProductsTheme(theme) {
     });
 }
 
-function loadProducts($dato) {
-    console.log($dato)
+function loadProducts(dato) {
+    console.log(dato)
     $.ajax({
         url: '../PHP/descubrir.php',
         type: 'POST',
-        data:{'producto':$dato}, 
+        data:{producto:dato}, 
         success: function(response) {
             console.log(response)
             let productosParse = JSON.parse(response);
