@@ -1,30 +1,33 @@
-CREATE DATABASE proyecto;
+CREATE DATABASE IF NOT EXISTS proyecto;
 USE proyecto;
 
+-- Crear tabla Usuarios
 CREATE TABLE Usuarios (
     ID_USER INT PRIMARY KEY AUTO_INCREMENT,
-    user VARCHAR(50),
-    password VARCHAR(50),
+    username VARCHAR(50),        -- Cambiado 'user' a 'username' para evitar conflictos con palabras reservadas
+    password VARCHAR(255),       -- Se recomienda almacenar contraseñas con hash, por lo tanto, se incrementa el tamaño
     root BOOLEAN,
-    nombre VARCHAR(50),
-    apellidos VARCHAR(50),
-    poblacion VARCHAR(50),
-    provincia VARCHAR(50),
+    nombre VARCHAR(255),
+    apellidos VARCHAR(255),
+    poblacion VARCHAR(255),
+    provincia VARCHAR(255),
     codigo_postal VARCHAR(10),
-    direccion VARCHAR(100),
-    pfp VARCHAR(100)  -- O puedes usar BLOB si es para almacenar una imagen directamente
+    direccion VARCHAR(255),
+    pfp VARCHAR(255)             -- Almacenar la ruta de la imagen
 );
 
+-- Crear tabla Productos
 CREATE TABLE Productos (
     ID_PRODUCTO INT PRIMARY KEY AUTO_INCREMENT,
-    nombre VARCHAR(100),
-    codigo VARCHAR(6),
-    tema VARCHAR(50),
+    nombre VARCHAR(255),
+    codigo VARCHAR(6) UNIQUE,    -- Asegurar que el código del producto sea único
+    tema VARCHAR(255),
     num_piezas INT,
     precio DECIMAL(10, 2),
     tipo VARCHAR(20)
 );
 
+-- Crear tabla Pedidos
 CREATE TABLE Pedidos (
     ID_Pedido INT PRIMARY KEY AUTO_INCREMENT,
     precio_total DECIMAL(10, 2),
@@ -32,32 +35,36 @@ CREATE TABLE Pedidos (
     fecha_recibido DATE,
     estado VARCHAR(50),
     ID_usuario INT,
-    FOREIGN KEY (ID_usuario) REFERENCES Usuarios(ID_USER)
+    FOREIGN KEY (ID_usuario) REFERENCES Usuarios(ID_USER) ON DELETE CASCADE -- Si un usuario es eliminado, se borran sus pedidos
 );
 
+-- Crear tabla Detalle_pedidos
 CREATE TABLE Detalle_pedidos (
     ID_Detalle_Pedido INT PRIMARY KEY AUTO_INCREMENT,
     ID_Pedido INT,
     ID_PRODUCTO INT,
-    FOREIGN KEY (ID_Pedido) REFERENCES Pedidos(ID_Pedido),
+    FOREIGN KEY (ID_Pedido) REFERENCES Pedidos(ID_Pedido) ON DELETE CASCADE, -- Si se elimina un pedido, se eliminan los detalles
     FOREIGN KEY (ID_PRODUCTO) REFERENCES Productos(ID_PRODUCTO)
 );
 
+-- Crear tabla Wishlists
 CREATE TABLE Wishlists (
     ID_Wishlist INT PRIMARY KEY AUTO_INCREMENT,
     ID_USER INT,
-    FOREIGN KEY (ID_USER) REFERENCES Usuarios(ID_USER)
+    FOREIGN KEY (ID_USER) REFERENCES Usuarios(ID_USER) ON DELETE CASCADE -- Si se elimina un usuario, se elimina su wishlist
 );
 
+-- Crear tabla Wishlist_detalle
 CREATE TABLE Wishlist_detalle (
     ID_Wishlist_Detalle INT PRIMARY KEY AUTO_INCREMENT,
     ID_Wishlist INT,
     ID_PRODUCTO INT,
-    FOREIGN KEY (ID_Wishlist) REFERENCES Wishlists(ID_Wishlist),
+    FOREIGN KEY (ID_Wishlist) REFERENCES Wishlists(ID_Wishlist) ON DELETE CASCADE, -- Si se elimina la wishlist, se eliminan los detalles
     FOREIGN KEY (ID_PRODUCTO) REFERENCES Productos(ID_PRODUCTO)
 );
 
-INSERT INTO proyecto.productos (nombre, codigo, tema, num_piezas, precio, tipo)
+-- Insertar productos en la tabla Productos
+INSERT INTO Productos (nombre, codigo, tema, num_piezas, precio, tipo)
 VALUES 
     ('Coche de Carreras de Fórmula 1 McLaren 2023', '76919', 'Speed Champions', 245, 26.99, 'set'),
     ('Mercedes-AMG F1 W12 E Performance y Mercedes-AMG Project One', '76909', 'Speed Champions', 564, 44.99, 'set'),
@@ -100,15 +107,15 @@ VALUES
     ('Espíritu y Fantasma II', '75357', 'Star Wars', 1394, 169.99, 'set'),
     ('Paz Vizsla', 'SW1172', 'Star Wars', 1, 17.99, 'minifig'),
     ('Moff Gideon', 'SW1160', 'Star Wars', 1, 56.99, 'minifig'),
-    ('Inquisidor Marrok', 'SW1301', 'Star Wars', 1, 12.99, 'minfig'),
-    ('Darth Vader', 'SW1249', 'Star Wars', 1, 7.99, 'minfig'),
-    ('Comandante clon de asalto Cody', 'SW1233', 'Star Wars', 1, 27.99, 'minfig'),
-    ('Darth Maul', 'SW0003', 'Star Wars', 1, 24.99, 'minfig'),
-    ('El Mandaloriano', 'SW1258', 'Star Wars', 1, 9.99, 'minfig'),
-    ('Piloto caza TIE', 'SW1260', 'Star Wars', 1, 6.99, 'minfig'),
-    ('Dark Trooper', 'SW1161', 'Star Wars', 1, 8.99, 'minfig'),
-    ('Gar Saxon', 'SW1162', 'Star Wars', 1, 56.99, 'minfig'),
-    ('Wolverine', 'M2012', 'Marvel', 1, 6.99, 'minfig'),
-    ('MR. Knight', 'M2003', 'Marvel', 1, 4.99, 'minfig'),
-    ('Spider-Man', 'M2778', 'Marvel', 1, 11.99, 'minfig'),
-    ('Venom', 'M2664', 'Marvel', 1, 11.99, 'minfig');
+    ('Inquisidor Marrok', 'SW1301', 'Star Wars', 1, 12.99, 'minifig'),
+    ('Darth Vader', 'SW1249', 'Star Wars', 1, 7.99, 'minifig'),
+    ('Comandante clon de asalto Cody', 'SW1233', 'Star Wars', 1, 27.99, 'minifig'),
+    ('Darth Maul', 'SW0003', 'Star Wars', 1, 24.99, 'minifig'),
+    ('El Mandaloriano', 'SW1258', 'Star Wars', 1, 9.99, 'minifig'),
+    ('Piloto caza TIE', 'SW1260', 'Star Wars', 1, 6.99, 'minifig'),
+    ('Dark Trooper', 'SW1161', 'Star Wars', 1, 8.99, 'minifig'),
+    ('Gar Saxon', 'SW1162', 'Star Wars', 1, 56.99, 'minifig'),
+    ('Wolverine', 'M2012', 'Marvel', 1, 6.99, 'minifig'),
+    ('MR. Knight', 'M2003', 'Marvel', 1, 4.99, 'minifig'),
+    ('Spider-Man', 'M2778', 'Marvel', 1, 11.99, 'minifig'),
+    ('Venom', 'M2664', 'Marvel', 1, 11.99, 'minifig');

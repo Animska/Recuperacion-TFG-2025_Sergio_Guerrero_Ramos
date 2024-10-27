@@ -78,7 +78,7 @@ function cargarProductos2(){
 
 function loadProductsTheme(theme) {
     $.ajax({
-        url: '../PHP/getProductosCategoria.php',
+        url: '../PHP/descubrir.php',
         type: 'POST',
         data: { theme: theme },
         success: function(response) {
@@ -118,16 +118,17 @@ function loadProductsTheme(theme) {
 }
 
 function loadProducts(dato) {
-    console.log(dato)
+    console.log(dato);
     $.ajax({
         url: '../PHP/descubrir.php',
         type: 'POST',
         data:{producto:dato}, 
         success: function(response) {
-            console.log(response)
+            console.log(response);
             let productosParse = JSON.parse(response);
             $('#productos').html('');
             try {
+                $('#tema').html(dato);
                 let productos = $('#productos')
                 $.each(productosParse, function (index, producto) {
                     let productoString = '<div class="card p-3 position-relative m-2 cursor:pointer" style="width: 23%;">\n' +
@@ -178,7 +179,7 @@ $(function (){
         });
     });
 
-    $('#sets').on('click',function(event){
+    $('#todo').on('click',function(event){
         event.preventDefault();
         $.ajax({
             url: '../HTML/busqueda.html',
@@ -193,14 +194,29 @@ $(function (){
         });
     })
 
-    $('#minifiguras').on('click',function(event){
+    $('.MINIFIGURAS').on('click',function(event){
         event.preventDefault();
         $.ajax({
             url: '../HTML/busqueda.html',
             type: 'POST',
             success: function(response) {
                 $('#body').html(response)
-                loadProducts('minifigura');
+                loadProducts('minifig');
+            },
+            error: function(xhr, status, error) {
+                console.error("Error loading search page:", error);
+            }
+        });
+    })
+
+    $('#SETS').on('click',function(event){
+        event.preventDefault();
+        $.ajax({
+            url: '../HTML/busqueda.html',
+            type: 'POST',
+            success: function(response) {
+                $('#body').html(response)
+                loadProducts('set');
             },
             error: function(xhr, status, error) {
                 console.error("Error loading search page:", error);
