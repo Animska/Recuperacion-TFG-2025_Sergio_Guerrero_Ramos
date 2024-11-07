@@ -1,60 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Brick Buddy</title>
     <script src="../JS/jquery-3.7.1.min.js"></script>
-    <script src="../JS/nav.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
     <link rel="stylesheet" href="../CSS/estilos.css" />
     <link rel="stylesheet" href="../CSS/miestilo.css" />
-    <script src="../NODE_MODULES/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../NODE_MODULES/bootstrap/dist/js/bootstrap.bundle.min.js"></script>    
 </head>
-
 <body>
-    <header class="bg-yellowLego pt-4 ">
-        <nav class="navbar navbar-expand-lg navbar-dark bg-yellowLego sticky-top shadow-lg py-2">
-            <div class="container mt-2">
-                <img src="../IMAGES/logo proto.png" alt="" class="img-fluid" id="logo">
-
+    <header class="bg-yellowLego pt-4">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-yellowLego sticky-top shadow-lg py-3">
+            <div class="container-fluid mt-2">
+                <div class="row w-100">
+                    <img src="../IMAGES/logo proto.png" alt="" class=" col-3 offset-1" id="logo">
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
                     aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="collapse navbar-collapse justify-content-between col-lg-6" id="navbarNavAltMarkup">
                     <div class="navbar-nav text-start fw-bolder fs-3 " id="navbar">
                         <a id="DESCUBRIR" class="nav-link text-white ms-5 mx-3  " href="#">DESCUBRIR</a>
                         <a id="FAQ" class="nav-link text-white mx-3" href="#footer">FAQ</a>
                         <a id="SETS" class="nav-link text-white mx-3" href="#">SETS</a>
                         <a id="MINIFIGURAS" class="nav-link text-white mx-3 MINIFIGURAS" href="#">MINIFIGURAS</a>
                     </div>
-                </div>
 
-                <div id="loginInicial" class=" nav-link mx-2 ">
-                    <button type="button" class="bg-transparent border-0 text-white d-flex align-items-center mx-1 "
-                        data-bs-toggle="modal" data-bs-target="#exampleModal">
-                        <i class="bi bi-person-fill text-white fs-1  "></i>
-
+                    <div id="inicioSesion" class="col-2 offset-1">
+                        <button type="button" class="btn btn-lg text-light" style="background-color:transparent"  data-bs-toggle="modal" data-bs-target="#loginModal">
+                            INICIAR SESION
                     </button>
-                </div>
-
-                <div id="loginUsuario" class="d-none mx-2 ">
-                    <div class="dropdown mx-2">
-                        <button class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="./images/06.jpg" alt="" srcset="" id="pfp" />
-                        </button>
-                        <ul class="dropdown-menu bg-dark dropdown-menu-dark ">
-                            <li><a class="dropdown-item" href="#"><i class="bi bi-person"></i> Perfil</a></li>
-                            <li><a class="dropdown-item" href="#"><i class="bi bi-gear"></i> Configuración</a></li>
-                            <li><a class="dropdown-item" href="#" id="logout"><i class="bi bi-box-arrow-right"></i>
-                                    Cerrar Sesión</a>
-                            </li>
-                        </ul>
                     </div>
+                    <div id="divUsuario" class="d-none d-flex align-items-center col-2 offset-1 justify-content-center">
+                        <H4 id="nombreUsuario" class="text-white m-1"></H4>
+                        <img id="imagenUsuario" src="" alt="" class="rounded-circle m-1">
+                        <div class="dropdown m-1">
+                            <button class="btn btn-redLego dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-gear-fill"></i>
+                            </button>
+                            <ul class="dropdown-menu bg-redLego ">
+                                <li><a class="dropdown-item text-white" href="#">Pedidos</a></li>
+                                <li><a class="dropdown-item text-white" href="#"></a></li>
+                                <li><a class="dropdown-item text-white" href="#" id="cerrarSesion">Cerrar Sesion</a></li>
+                                </ul>
+                            </div>
+                    </div>
+
                 </div>
+                </div>            
         </nav>
     </header>
     <section id="body"></section>
@@ -123,6 +119,35 @@
             </div>
         </div>
     </footer>
-    <script src="../NODE_MODULES/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Login Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-yellowLego">
+                    <h5 class="modal-title" id="loginModalLabel">Iniciar Sesion</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div id="errorLogin" class="text-danger text-center bg-danger bg-opacity-25"></div>
+                <div class="modal-body">
+                    <form action="" method="POST" id="formlogin">
+                        <div class="mb-3">
+                            <label for="user" class="form-label">Usuario</label>
+                            <input type="user" class="form-control" id="user" name="user" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Contraseña</label>
+                            <input type="password" class="form-control" id="password" name="password" required>
+                        </div>
+                        <div class="modal-footer justify-content-center">
+                            <button type="submit" class="btn btn-redLego">Iniciar Sesion</button>
+                            <button type="button" class="btn btn-redLego">Registrarse</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../JS/nav.js"></script>
 </body>
+
 </html>

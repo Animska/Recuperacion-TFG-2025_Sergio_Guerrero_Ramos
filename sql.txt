@@ -119,3 +119,9 @@ VALUES
     ('MR. Knight', 'M2003', 'Marvel', 1, 4.99, 'minifig'),
     ('Spider-Man', 'M2778', 'Marvel', 1, 11.99, 'minifig'),
     ('Venom', 'M2664', 'Marvel', 1, 11.99, 'minifig');
+
+INSERT INTO Usuarios (username, password, root, nombre, apellidos, poblacion, provincia, codigo_postal, direccion, pfp) 
+VALUES 
+    ('root', 'root', TRUE, 'Sergio', 'Guerrero Ramos', 'Fuente del Maestre', 'Badajoz', '06360', 'Calle Falsa 123', '10'),
+    ('user', 'user', FALSE, 'Juan', 'Perez', 'Barcelona', 'Barcelona', '08001', 'Calle Real 456', '2');
+

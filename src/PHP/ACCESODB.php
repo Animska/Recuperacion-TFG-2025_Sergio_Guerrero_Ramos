@@ -169,7 +169,42 @@ Class BD{
         }
     }
     
-    
+    public static function getUser($username) {
+        try {
+            // Consulta para seleccionar un producto por su código
+            $sql = "SELECT * FROM usuarios WHERE username = ?";
+            $conn = self::conexion();
+            $stmt = $conn->prepare($sql);
+            
+            // 's' especifica que el parámetro es una cadena (string)
+            $stmt->bind_param("s", $username);
+            
+            // Ejecutar la consulta
+            $stmt->execute();
+            $result = $stmt->get_result();
+            
+            // Verificar si hay resultados
+            if ($result->num_rows > 0) {
+                // Obtener solo una fila (la primera)
+                $producto = $result->fetch_assoc();
+                return json_encode($producto);  // Devuelve el producto como JSON
+            } else {
+                // Si no hay resultados, devolver un JSON indicando esto
+                return json_encode(["message" => "0 resultados"]);
+            }
+        } catch (Exception $th) {
+            // Devolver el mensaje de error en formato JSON
+            return json_encode(["error" => "Error al obtener el usuario: " . $th->getMessage()]);
+        } finally {
+            // Asegurarse de cerrar la declaración preparada y la conexión
+            if (isset($stmt)) {
+                $stmt->close();
+            }
+            if (isset($conn)) {
+                $conn->close();
+            }
+        }
+    }
 
 
 

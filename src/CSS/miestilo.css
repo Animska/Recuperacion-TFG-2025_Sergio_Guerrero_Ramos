@@ -64,3 +64,11 @@ header{
 .carousel-link{
     cursor: pointer !important;
 }
+
+.dropdown-item:hover{
+    background-color: brown;
+}
+
+#imagenUsuario{
+    width: 15%;
+}
