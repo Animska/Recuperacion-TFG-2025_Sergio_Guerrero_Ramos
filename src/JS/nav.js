@@ -100,6 +100,10 @@ $(function () {
         $('#divUsuario').removeClass('d-none')
         $('#nombreUsuario').html(window.localStorage.getItem('nombreUsuario'))
         $('#imagenUsuario').attr('src','../IMAGES/pfp/'+window.localStorage.getItem('imagenUsuario')+'.JPG')
+
+        if(window.localStorage.getItem('root')=='1'){
+            $('#opcionesAdmin').removeClass('d-none')
+        }
     }
 
     $('#cerrarSesion').on('click',function(event){
@@ -161,6 +165,7 @@ $(function () {
                         window.localStorage.setItem('inicioSesion','true')
                         window.localStorage.setItem('imagenUsuario',usuario.pfp)
                         window.localStorage.setItem('nombreUsuario',usuario.nombre)
+                        window.localStorage.setItem('root',usuario.root)
 
                         $('#inicioSesion').addClass('d-none')
                         $('#divUsuario').removeClass('d-none')
@@ -168,6 +173,9 @@ $(function () {
                         $('#imagenUsuario').attr('src','../IMAGES/pfp/'+usuario.pfp+'.JPG')
 
                         $('.modal').modal('toggle')
+                        if(window.localStorage.getItem('root')=='1'){
+                            $('#opcionesAdmin').removeClass('d-none')
+                        }
 
                 }
             },
