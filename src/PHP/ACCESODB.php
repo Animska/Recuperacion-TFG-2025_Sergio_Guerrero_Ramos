@@ -206,7 +206,56 @@ Class BD{
         }
     }
 
-
+    public static function insertUser($username, $password, $root, $nombre, $apellidos, $poblacion, $provincia, $codigo_postal, $direccion, $pfp) {
+        try {
+            // Consulta SQL para insertar un usuario
+            $sql = "INSERT INTO Usuarios (username, password, root, nombre, apellidos, poblacion, provincia, codigo_postal, direccion, pfp) 
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $conn = self::conexion();
+            $stmt = $conn->prepare($sql);
+    
+            // Verificar si la sentencia se preparó correctamente
+            if (!$stmt) {
+                throw new Exception("Error en la preparación de la sentencia: " . $conn->error);
+            } 
+            // Vincular los parámetros ('s' para string, 'i' para integer)
+            $stmt->bind_param("ssisssssss", 
+            $username, 
+            $password, 
+                $root, 
+                $nombre, 
+                $apellidos, 
+                $poblacion, 
+                $provincia, 
+                $codigo_postal, 
+                $direccion, 
+                $pfp
+            );
+    
+            // Ejecutar la sentencia
+            $resultado = $stmt->execute();
+    
+            // Verificar si la ejecución fue exitosa
+            if ($resultado) {
+                return json_encode(["message" => "Usuario insertado correctamente"]);
+            } else {
+                throw new Exception("Error al ejecutar la sentencia: " . $stmt->error);
+            }
+    
+        } catch (Exception $e) {
+            // Devolver el mensaje de error en formato JSON
+            return json_encode(["error" => "Error al insertar usuario: " . $e->getMessage()]);
+        } finally {
+            // Cerrar la declaración y la conexión
+            if (isset($stmt)) {
+                $stmt->close();
+            }
+            if (isset($conn)) {
+                $conn->close();
+            }
+        }
+    }
+    
 
 
 }

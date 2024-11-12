@@ -5,14 +5,14 @@ include_once('../PHP/ACCESODB.php');
     $password = $_POST['password'];
 
     // Check if user exists
-    $resultado =  BD::GetUser($user);
+    $resultado =  BD::getUser($user);
     
     if(array_key_exists('message',json_decode($resultado,true),) || array_key_exists('error',json_decode($resultado,true))){
         echo 'noUser';
         return;
     }
     if(json_decode($resultado,true)['password']!=$password){
-        echo 'noPassword';
+        echo 'error';
         return;
     }else{
         echo $resultado;

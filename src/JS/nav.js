@@ -143,7 +143,7 @@ $(function () {
         });
     }
 
-    $('#formlogin').on('submit',function(event){
+    $('#formLogin').on('submit',function(event){
         event.preventDefault()
         $.ajax({
             url: '../PHP/Login.php',
@@ -180,11 +180,58 @@ $(function () {
                 }
             },
             error: function () {
-                alert('Error al cargar la pagina Home');
+                alert('Error al cargar el usuario');
             }
     })
-    
+})
 
+$('#formSignUp').on('submit',function(event){
+    event.preventDefault()
+    $.ajax({
+        url: '../PHP/signup.php',
+        type: 'POST',
+        data:{
+            nombre: $('#nombre').val(),
+            apellidos: $('#apellidos').val(),
+            user: $('#userReg').val(),
+            password: $('#passwordReg').val(),
+            direccion: $('#direccion').val(),
+            codPostal: $('#codPostal').val(),
+            poblacion: $('#poblacion').val(),
+            provincia: $('#provincia').val()
+        },
+        success: function (respuesta) {
+            if(respuesta=='error'){
+                $('#errorLogin').html('error al registrarte')
+            }else{
+                $('#errorLogin').removeClass('bg-danger')
+                $('#errorLogin').addClass('bg-success')
+                $('#errorLogin').html('Usuario registrado satisfactoriamente, seras redirrigido al inicio')
+
+                setTimeout(function() {
+                    location.reload(true);
+                }, 5000);
+                
+                
+                $('#errorLogin').addClass('bg-danger')
+            }
+
+            
+        },
+        error: function () {
+            alert('Error al cargar el usuario');
+        }
+})
+})
+    
+$('#toggleLogin').on('click',function(event){
+    $('#formSignUp').addClass('d-none')
+    $('#formLogin').removeClass('d-none')
+})
+
+$('#toggleSignUp').on('click',function(event){
+    $('#formLogin').addClass('d-none')
+    $('#formSignUp').removeClass('d-none')
 })
 
 })

@@ -129,7 +129,7 @@
                 </div>
                 <div id="errorLogin" class="text-danger text-center bg-danger bg-opacity-25"></div>
                 <div class="modal-body">
-                    <form action="" method="POST" id="formlogin">
+                    <form action="" method="POST" id="formLogin">
                         <div class="mb-3">
                             <label for="user" class="form-label">Usuario</label>
                             <input type="user" class="form-control" id="user" name="user" required>
@@ -140,9 +140,56 @@
                         </div>
                         <div class="modal-footer justify-content-center">
                             <button type="submit" class="btn btn-redLego">Iniciar Sesion</button>
-                            <button type="button" class="btn btn-redLego">Registrarse</button>
+                        </div>
+                        <div class="text-center">
+                            <hr>
+                            <a href="#" class="text-decoration-none" id="toggleSignUp">¿No tienes cuenta? Registrate aqui</a>
                         </div>
                     </form>
+
+                    <form action="" method="post" id="formSignUp" class="d-none overflow-hidden">
+                        <div class="mb-3">
+                            <label for="nombre" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="nombre"  name="nombre" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="apellidos" class="form-label">Apellidos</label>
+                            <input type="text" class="form-control" id="apellidos" name="apellidos" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="user" class="form-label">Usuario</label>
+                            <input type="user" class="form-control" id="userReg" name="userReg" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Contraseña</label>
+                            <input type="password" class="form-control" id="passwordReg" name="passwordReg" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="direccion" class="form-label">Direccion</label>
+                            <input type="text" class="form-control" id="direccion" name="direccion" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="codPostal" class="form-label">Codigo Postal</label>
+                            <input type="text" class="form-control" maxlength="6" size="10" id="codPostal" name="codPostal" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="poblacion" class="form-label">Poblacion</label>
+                            <input type="text" class="form-control" id="poblacion" name="poblacion" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="provincia" class="form-label">Provincia</label>
+                            <input type="text" class="form-control" id="provincia" name="provincia" required>
+                        </div>
+                        <div class="modal-footer justify-content-center">
+                            <button type="submit" class="btn btn-redLego">Registrate aqui</button>
+                        </div>
+                        <div class="text-center">
+                            <hr>
+                            <a href="#" class="text-decoration-none" id="toggleLogin">¿Ya tienes cuenta? Inicia sesion aqui</a>
+                        </div>
+                    </form>
+                    
+                    
                 </div>
             </div>
         </div>
