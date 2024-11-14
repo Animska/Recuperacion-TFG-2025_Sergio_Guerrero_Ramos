@@ -72,3 +72,20 @@ header{
 #imagenUsuario{
     width: 10%;
 }
+
+
+/* shopping cart */
+#productosCarrito{
+    height: 60vh;
+}
+
+#divCarrito .dropdown-menu{
+    width: 40vw;
+}
+
+
+
+.productoCarrito img{
+    height: 20vh;
+    object-fit: contain;
+}

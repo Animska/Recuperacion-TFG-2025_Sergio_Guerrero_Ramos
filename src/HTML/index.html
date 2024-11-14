@@ -14,7 +14,7 @@
     <header class="bg-yellowLego pt-4">
         <nav class="navbar navbar-expand-lg navbar-dark bg-yellowLego sticky-top shadow-lg py-3">
             <div class="container-fluid mt-2">
-                <div class="row w-100">
+                <div class="row w-100 align-items-center">
                     <img src="../IMAGES/logo proto.png" alt="" class=" col-3 offset-1" id="logo">
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
@@ -30,25 +30,45 @@
                     </div>
 
                     <div id="inicioSesion" class="col-2 offset-1">
-                        <button type="button" class="btn btn-lg text-light" style="background-color:transparent"  data-bs-toggle="modal" data-bs-target="#loginModal">
+                        <button type="button" class="btn btn-lg text-light fw-bolder" style="background-color:transparent"  data-bs-toggle="modal" data-bs-target="#loginModal">
                             INICIAR SESION
                     </button>
                     </div>
-                    <div id="divUsuario" class="d-none d-flex align-items-center justify-content-center">
-                        <H4 id="nombreUsuario" class="text-white m-1"></H4>
+                    <div id="divUsuario" class="d-none d-flex align-items-center justify-content-end">
+                        <H4 id="nombreUsuario" class="text-white m-1 fw-bolder"></H4>
                         <img id="imagenUsuario" src="" alt="" class="rounded-circle m-1">
-                        <div class="dropdown-center m-1">
+                        <div class="dropdown m-1">
                             <button class="btn btn-redLego dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="bi bi-gear-fill"></i>
                             </button>
-                                <ul class="dropdown-menu bg-redLego ">
+                                <ul class="dropdown-menu dropdown-menu-end bg-redLego ">
                                     <li><a class="dropdown-item text-white" href="#" id="pedidos">Pedidos</a></li>
                                     <li><a class="dropdown-item text-white d-none" href="#" id="opcionesAdmin">Opciones de administrador</a></li>
                                     <li><a class="dropdown-item text-white" href="#" id="cerrarSesion">Cerrar Sesion</a></li>
                                 </ul>
                             </div>
                     </div>
+                </div>
+                <div id="divCarrito" class="dropdown d-flex d-none justify-content-center P-3 align-items-center" style="width: 50px; height: 50px;">
+                    <a href="#" class="text-white dropdown-toggle" data-bs-toggle="dropdown"><i class="bi bi-cart-fill fs-1"></i></a>
+                    <div id="contadorProductos" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                        0
+                    </div>
+                    <div class="dropdown-menu dropdown-menu-end shadow-lg">
+                        <div id="productosCarrito" class="overflow-y-auto">
+                            
+                        </div>
+                        <div id="precioCarrito" class="border-top">
 
+                        </div>
+                        <div id="botonCarrito" class="justify-content-center d-flex">
+                            <button type="button" class="btn btn-redLego text-light fs-3 fw-bolder">
+                                TRAMITAR PEDIDO
+                            </button>
+                        </div>
+                        
+
+                    </div>
                 </div>
                 </div>            
         </nav>

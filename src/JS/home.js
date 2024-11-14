@@ -10,7 +10,7 @@ function cargarProductos(){
             productos.html('')
             let contador=1
             $.each(productosParse, function (index, producto) {
-                let productoString ='<div class="producto card position-relative" style="width: 30%;">\n' +
+                let productoString ='<div class="producto card position-relative" data-codigoProducto='+producto.codigo+' style="width: 30%;">\n' +
                                     '<div class="image-container" style="height: 200px; overflow: hidden;">\n' +
                                     '<a href="./index.html?codigo='+producto.codigo+'" class="text-decoration-none text-dark"><img src="../IMAGES/productos/' + producto.codigo + '.webp" class="card-img-top p-3 img-fluid" alt="..." style="height: 100%; width: 100%; object-fit: contain;">\n' +
                                     '</div>\n' +
@@ -18,7 +18,7 @@ function cargarProductos(){
                                     '    <h5 class="card-title fw-bold text-uppercase nombre">' + producto.nombre + '</h5><a>\n' +
                                     '    <h5 class="card-text fw-bold precio">' + producto.precio + ' €</h5>\n' +
                                     '    <div class="botonCentrado text-center mt-2">\n' +
-                                    '        <a href="#" class="btn btn-redLego fw-bold d-inline-block mx-auto">Añadir al carrito</a>\n' +
+                                    '        <a href="#" class="btn btn-redLego fw-bold d-inline-block mx-auto añadirCarrito">Añadir al carrito</a>\n' +
                                     '    </div>\n' +
                                     '</div>\n' +
                                     '<span><i class="bi bi-heart position-absolute top-0 end-0 me-2 fs-3 text-primary" id="fav"></i></span>\n' +
@@ -49,7 +49,7 @@ function cargarProductos2(){
             productos.html('')
             let contador=1
             $.each(productosParse, function (index, producto) {
-                let productoString ='<div class="producto card position-relative" style="width: 30%;">\n' +
+                let productoString ='<div class="producto card position-relative" data-codigoProducto='+producto.codigo+' style="width: 30%;">\n' +
                                     '<div class="image-container" style="height: 200px; overflow: hidden;">\n' +
                                     '<a href="../HTML/index.html?codigo='+producto.codigo+'" class="text-decoration-none text-dark"><img src="../IMAGES/productos/' + producto.codigo + '.webp" class="card-img-top p-3 img-fluid" alt="..." style="height: 100%; width: 100%; object-fit: contain;">\n' +
                                     '</div>\n' +
@@ -57,7 +57,7 @@ function cargarProductos2(){
                                     '    <h5 class="card-title fw-bold text-uppercase nombre">' + producto.nombre + '</h5><a>\n' +
                                     '    <h5 class="card-text fw-bold precio">' + producto.precio + ' €</h5>\n' +
                                     '    <div class="botonCentrado text-center mt-2">\n' +
-                                    '        <a href="#" class="btn btn-redLego fw-bold d-inline-block mx-auto">Añadir al carrito</a>\n' +
+                                    '        <a href="#" class="btn btn-redLego fw-bold d-inline-block mx-auto añadirCarrito">Añadir al carrito</a>\n' +
                                     '    </div>\n' +
                                     '</div>\n' +
                                     '<span><i class="bi bi-heart position-absolute top-0 end-0 me-2 fs-3 text-primary" id="fav"></i></span>\n' +
@@ -88,7 +88,7 @@ function loadProductsTheme(theme) {
             try {
                 let productos = $('#productos')
                 $.each(productosParse, function (index, producto) {
-                    let productoString = '<div class="producto card p-3 position-relative m-2 cursor:pointer" style="width: 23%;">\n' +
+                    let productoString = '<div class="producto card p-3 position-relative m-2 cursor:pointer" data-codigoProducto='+producto.codigo+' style="width: 23%;">\n' +
                                         '<div class="image-container" style="height: 200px; overflow: hidden;">\n' +
                                         '<a href="../HTML/index.html?codigo='+producto.codigo+'" class="text-decoration-none text-dark"><img src="../IMAGES/productos/' + producto.codigo + '.webp" class="card-img-top p-3 img-fluid" alt="..." style="height: 100%; width: 100%; object-fit: contain;">\n' +
                                         '</div>\n' +
@@ -96,7 +96,7 @@ function loadProductsTheme(theme) {
                                         '    <h5 class="card-title fw-bold text-uppercase nombre">' + producto.nombre + '</h5></a>\n' +
                                         '    <h5 class="card-text fw-bold precio">' + producto.precio + ' €</h5>\n' +
                                         '    <div class="botonCentrado text-center mt-2">\n' +
-                                        '        <a href="#" class="btn btn-redLego fw-bold d-inline-block mx-auto">Añadir al carrito</a>\n' +
+                                        '        <a href="#" class="btn btn-redLego fw-bold d-inline-block mx-auto añadirCarrito">Añadir al carrito</a>\n' +
                                         '    </div>\n' +
                                         '</div>\n' +
                                         '<span><i class="bi bi-heart position-absolute top-0 end-0 me-2 fs-3 text-primary" id="fav"></i></span>\n' +

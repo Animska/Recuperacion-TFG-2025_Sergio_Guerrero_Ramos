@@ -13,6 +13,7 @@ function cargarDatosProducto(codigo) {
                 if (producto && typeof producto === 'object' && !producto.error) {
 
                     // Cargar los datos del producto directamente
+                    $('.producto').attr('data-codigoProducto',producto.codigo);
                     $('#n_articulo').html(producto.codigo);   // Muestra el código del producto
                     $('#nombre_set').html(producto.nombre);   // Muestra el nombre del producto
                     // $('title').html(producto.nombre)
@@ -57,7 +58,7 @@ function cargarProductos(){
             productos.html('')
             let contador=1
             $.each(productosParse, function (index, producto) {
-                let productoString ='<div class="card position-relative" style="width: 30%;">\n' +
+                let productoString ='<div class="card position-relative" data-codigoProducto='+producto.codigo+' style="width: 30%;">\n' +
                                     '<div class="image-container" style="height: 200px; overflow: hidden;">\n' +
                                     '<a href="../HTML/index.html?codigo='+producto.codigo+'" class="text-decoration-none text-dark"><img src="../IMAGES/productos/' + producto.codigo + '.webp" class="card-img-top p-3 img-fluid" alt="..." style="height: 100%; width: 100%; object-fit: contain;">\n' +
                                     '</div>\n' +
@@ -65,7 +66,7 @@ function cargarProductos(){
                                     '    <h5 class="card-title fw-bold text-uppercase">' + producto.nombre + '</h5><a>\n' +
                                     '    <h5 class="card-text fw-bold">' + producto.precio + ' €</h5>\n' +
                                     '    <div class="botonCentrado text-center mt-2">\n' +
-                                    '        <a href="#" class="btn btn-redLego fw-bold d-inline-block mx-auto">Añadir al carrito</a>\n' +
+                                    '        <a href="#" class="btn btn-redLego fw-bold d-inline-block mx-auto añadirCarrito">Añadir al carrito</a>\n' +
                                     '    </div>\n' +
                                     '</div>\n' +
                                     '<span><i class="bi bi-heart position-absolute top-0 end-0 me-2 fs-3 text-primary" id="fav"></i></span>\n' +

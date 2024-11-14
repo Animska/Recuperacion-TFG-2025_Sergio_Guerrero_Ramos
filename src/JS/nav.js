@@ -10,7 +10,7 @@ function loadProducts(dato) {
                 $('#tema').html(dato);
                 let productos = $('#productos')
                 $.each(productosParse, function (index, producto) {
-                    let productoString = '<div class="producto card p-3 position-relative m-2 cursor:pointer" style="width: 23%;">\n' +
+                    let productoString = '<div class="producto card p-3 position-relative m-2 cursor:pointer" data-codigoProducto="'+producto.codigo+'" style="width: 23%;">\n' +
                                         '<div class="image-container" style="height: 200px; overflow: hidden;">\n' +
                                         '<a href="../HTML/index.html?codigo='+producto.codigo+'" class="text-decoration-none text-dark"><img src="../IMAGES/productos/' + producto.codigo + '.webp" class="card-img-top p-3 img-fluid" alt="..." style="height: 100%; width: 100%; object-fit: contain;">\n' +
                                         '</div>\n' +
@@ -18,7 +18,7 @@ function loadProducts(dato) {
                                         '    <h5 class="card-title fw-bold text-uppercase nombre">' + producto.nombre + '</h5></a>\n' +
                                         '    <h5 class="card-text fw-bold precio">' + producto.precio + ' €</h5>\n' +
                                         '    <div class="botonCentrado text-center mt-2">\n' +
-                                        '        <a href="#" class="btn btn-redLego fw-bold d-inline-block mx-auto">Añadir al carrito</a>\n' +
+                                        '        <a href="#" class="btn btn-redLego  fw-bold d-inline-block mx-auto añadirCarrito">Añadir al carrito</a>\n' +
                                         '    </div>\n' +
                                         '</div>\n' +
                                         '<span><i class="bi bi-heart position-absolute top-0 end-0 me-2 fs-3 text-primary" id="fav"></i></span>\n' +
@@ -36,6 +36,53 @@ function loadProducts(dato) {
             console.error("Error loading products:", error);
         }
     });
+}
+
+function llenarCarrito(response){
+    let productosCarrito = $('#productosCarrito');
+    productosCarrito.html('')
+    let cantidadCarrito=0
+    let precioTotal= 0
+
+    if(response.length==0){
+        return
+    }
+
+    var carrito = JSON.parse(response);
+
+    for (let key in carrito) {
+        if (carrito.hasOwnProperty(key)) {
+            // Parseamos la clave que está en formato JSON
+            let producto = JSON.parse(key);  // Convertimos la clave JSON en un objeto
+            let cantidad = carrito[key].cantidad; // Accedemos a la cantidad
+
+
+            // Puedes crear tu HTML dinámicamente aquí, por ejemplo:
+            let productoCarrito = `
+                <div class="productoCarrito g-1 m-0 row flex-nowrap">
+                    <div class='col-4'>
+                    <img class='p-3 w-100' src='../IMAGES/productos/`+producto.codigo+`.webp'</img>
+                    </div>
+                    <div class='col-5'>
+                        <p class=" fs-3 fw-bolder p-0">`+producto.nombre+`</p>
+                        <p class=" fs-3 fw-bolder text-primary p-0">`+producto.precio+`€</p>
+                    </div>
+                    <div class='col-3'>
+                    <p class=" productoCarrito_cantidad p-0">`+cantidad+`</p>
+                    </div>
+                    
+                </div>
+                <hr>
+            `;
+            // Añadir el producto al carrito en la interfaz
+            productosCarrito.append(productoCarrito);
+            cantidadCarrito+=cantidad
+            precioTotal+=(parseFloat(producto.precio)*parseInt(cantidad))
+        }
+    }
+
+    $('#contadorProductos').html(cantidadCarrito)
+    $('#precioCarrito').html('<p class="fs-3 fw-bolder m-3">PRECIO TOTAL: <span class="text-primary">'+parseFloat(precioTotal.toFixed(2))+'€</span></p>')
 }
 
 function rebindClicks(){
@@ -85,18 +132,69 @@ function rebindClicks(){
             }
         });
     })
+
+    $('.añadirCarrito').on('click',function(event){
+        event.preventDefault();
+        
+    })
+
+    $('#body').on('click','.añadirCarrito',function(event){
+        event.preventDefault();
+        let codigoProducto = $(this).closest('.producto').data('codigoproducto');
+        $.ajax({
+            url: '../PHP/carrito.php',
+            type: 'POST',
+            data:{'codigo':codigoProducto},
+            success: function(response) {
+                llenarCarrito(response)
+            },
+            error: function(xhr, status, error) {
+                console.error("Error loading search page:", error);
+            }
+        });
+
+    })
+
 }
-
-
-
-
 
 $(function () {
     let params = new URLSearchParams(document.location.search)
     let codigo = params.get('codigo')
 
+    $.ajax({
+        url: '../PHP/carrito.php',
+        type: 'POST',
+        success: function(response) {
+            llenarCarrito(response)
+        },
+        error: function(xhr, status, error) {
+            console.error("Error loading search page:", error);
+        }
+    });
+
+    $('#botonCarrito').on('click',function(event){
+        event.preventDefault()
+        $.ajax({
+            url: '../PHP/carrito.php',
+            type: 'POST',
+            data:{'borrar':'carrito'},
+            success: function(response) {
+                llenarCarrito(response)
+                $('#contadorProductos').html(0)
+                $('#precioCarrito').html('<p class="fs-3 fw-bolder m-3">PRECIO TOTAL: <span class="text-primary">0€</span></p>')
+            },
+            error: function(xhr, status, error) {
+                console.error("Error loading search page:", error);
+            }
+        });
+    })
+
+
+
+
     if(window.localStorage.getItem('inicioSesion')!=null){
         $('#inicioSesion').addClass('d-none')
+        $('#divCarrito').removeClass('d-none')
         $('#divUsuario').removeClass('d-none')
         $('#nombreUsuario').html(window.localStorage.getItem('nombreUsuario'))
         $('#imagenUsuario').attr('src','../IMAGES/pfp/'+window.localStorage.getItem('imagenUsuario')+'.JPG')
@@ -169,6 +267,7 @@ $(function () {
 
                         $('#inicioSesion').addClass('d-none')
                         $('#divUsuario').removeClass('d-none')
+                        $('#divCarrito').removeClass('d-none')
                         $('#nombreUsuario').html(usuario.nombre)
                         $('#imagenUsuario').attr('src','../IMAGES/pfp/'+usuario.pfp+'.JPG')
 
