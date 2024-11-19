@@ -1,11 +1,10 @@
 CREATE DATABASE IF NOT EXISTS proyecto;
 USE proyecto;
 
--- Crear tabla Usuarios
 CREATE TABLE Usuarios (
     ID_USER INT PRIMARY KEY AUTO_INCREMENT,
-    username VARCHAR(50),        -- Cambiado 'user' a 'username' para evitar conflictos con palabras reservadas
-    password VARCHAR(255),       -- Se recomienda almacenar contraseñas con hash, por lo tanto, se incrementa el tamaño
+    username VARCHAR(50),
+    password VARCHAR(255),
     root BOOLEAN,
     nombre VARCHAR(255),
     apellidos VARCHAR(255),
@@ -13,14 +12,13 @@ CREATE TABLE Usuarios (
     provincia VARCHAR(255),
     codigo_postal VARCHAR(10),
     direccion VARCHAR(255),
-    pfp VARCHAR(255)             -- Almacenar la ruta de la imagen
+    pfp VARCHAR(255)
 );
 
 -- Crear tabla Productos
 CREATE TABLE Productos (
-    ID_PRODUCTO INT PRIMARY KEY AUTO_INCREMENT,
+    ID_PRODUCTO VARCHAR(6) PRIMARY KEY,
     nombre VARCHAR(255),
-    codigo VARCHAR(6) UNIQUE,    -- Asegurar que el código del producto sea único
     tema VARCHAR(255),
     num_piezas INT,
     precio DECIMAL(10, 2),
@@ -32,18 +30,17 @@ CREATE TABLE Pedidos (
     ID_Pedido INT PRIMARY KEY AUTO_INCREMENT,
     precio_total DECIMAL(10, 2),
     fecha_envio DATE,
-    fecha_recibido DATE,
-    estado VARCHAR(50),
     ID_usuario INT,
-    FOREIGN KEY (ID_usuario) REFERENCES Usuarios(ID_USER) ON DELETE CASCADE -- Si un usuario es eliminado, se borran sus pedidos
+    FOREIGN KEY (ID_usuario) REFERENCES Usuarios(ID_USER) ON DELETE CASCADE
 );
 
 -- Crear tabla Detalle_pedidos
 CREATE TABLE Detalle_pedidos (
     ID_Detalle_Pedido INT PRIMARY KEY AUTO_INCREMENT,
     ID_Pedido INT,
-    ID_PRODUCTO INT,
-    FOREIGN KEY (ID_Pedido) REFERENCES Pedidos(ID_Pedido) ON DELETE CASCADE, -- Si se elimina un pedido, se eliminan los detalles
+    Cantidad INT,
+    ID_PRODUCTO VARCHAR(6),
+    FOREIGN KEY (ID_Pedido) REFERENCES Pedidos(ID_Pedido) ON DELETE CASCADE,
     FOREIGN KEY (ID_PRODUCTO) REFERENCES Productos(ID_PRODUCTO)
 );
 
@@ -51,74 +48,74 @@ CREATE TABLE Detalle_pedidos (
 CREATE TABLE Wishlists (
     ID_Wishlist INT PRIMARY KEY AUTO_INCREMENT,
     ID_USER INT,
-    FOREIGN KEY (ID_USER) REFERENCES Usuarios(ID_USER) ON DELETE CASCADE -- Si se elimina un usuario, se elimina su wishlist
+    FOREIGN KEY (ID_USER) REFERENCES Usuarios(ID_USER) ON DELETE CASCADE
 );
 
 -- Crear tabla Wishlist_detalle
 CREATE TABLE Wishlist_detalle (
     ID_Wishlist_Detalle INT PRIMARY KEY AUTO_INCREMENT,
     ID_Wishlist INT,
-    ID_PRODUCTO INT,
-    FOREIGN KEY (ID_Wishlist) REFERENCES Wishlists(ID_Wishlist) ON DELETE CASCADE, -- Si se elimina la wishlist, se eliminan los detalles
+    ID_PRODUCTO VARCHAR(6),
+    FOREIGN KEY (ID_Wishlist) REFERENCES Wishlists(ID_Wishlist) ON DELETE CASCADE,
     FOREIGN KEY (ID_PRODUCTO) REFERENCES Productos(ID_PRODUCTO)
 );
 
 -- Insertar productos en la tabla Productos
-INSERT INTO Productos (nombre, codigo, tema, num_piezas, precio, tipo)
+INSERT INTO Productos (ID_PRODUCTO, nombre, tema, num_piezas, precio, tipo)
 VALUES 
-    ('Coche de Carreras de Fórmula 1 McLaren 2023', '76919', 'Speed Champions', 245, 26.99, 'set'),
-    ('Mercedes-AMG F1 W12 E Performance y Mercedes-AMG Project One', '76909', 'Speed Champions', 564, 44.99, 'set'),
-    ('Safety Car de Aston Martin y AMR23', '76925', 'Speed Champions', 564, 49.99, 'set'),
-    ('Nissan Skyline GT-R (R34) de 2 Fast 2 Furious', '76917', 'Speed Champions', 245, 26.99, 'set'),
-    ('Coche de Carreras Audi S1 e-tron quattro', '76921', 'Speed Champions', 245, 26.99, 'set'),
-    ('Deportivo Ford Mustang Dark Horse', '76920', 'Speed Champions', 344, 26.99, 'set'),
-    ('Coches de Carreras BMW M4 GT3 y BMW M Hybrid V8', '76922', 'Speed Champions', 676, 49.99, 'set'),
-    ('Lamborghini Countach', '76908', 'Speed Champions', 262, 24.99, 'set'),
-    ('McLaren Solus GT y McLaren F1 LM', '76918', 'Speed Champions', 581, 44.99, 'set'),
-    ('Superdeportivo Lamborghini Lambo V12 Vision GT', '76923', 'Speed Champions', 230, 26.99, 'set'),
-    ('Máscara de Spider-Man', '76285', 'Marvel', 487, 69.99, 'set'),
-    ('Guantelete del Infinito', '76191', 'Marvel', 590, 89.99, 'set'),
-    ('Casco de Star-Lord', '76251', 'Marvel', 602, 79.99, 'set'),
-    ('X-Jet de los X-Men', '76281', 'Marvel', 359, 84.99, 'set'),
-    ('Figura para Construir: Duende Verde', '76284', 'Marvel', 471, 37.99, 'set'),
-    ('Armadura Robótica de Venom vs. Miles Morales', '76276', 'Marvel', 134, 14.99, 'set'),
-    ('Torre de los Vengadores', '76269', 'Marvel', 5201, 499.99, 'set'),
-    ('Daily Bugle', '76178', 'Marvel', 3789, 349.99, 'set'),
-    ('Nanoguantelete', '76223', 'Marvel', 675, 69.99, 'set'),
-    ('Hulkbuster', '76210', 'Marvel', 4049, 549.99, 'set'),
-    ('Moto de Carreras Transformable en Meca de Sora', '71792', 'Ninjago', 384, 47.99, 'set'),
-    ('Dojo Sombrío de la Máscara de Lobo', '71813', 'Ninjago', 1190, 119.99, 'set'),
-    ('Dragón Fuente del Movimiento', '71822', 'Ninjago', 1716, 149.99, 'set'),
-    ('Meca-Dragón Titán de Cole', '71821', 'Ninjago', 1055, 99.99, 'set'),
-    ('Meca Escalador Ninja de Kai', '71812', 'Ninjago', 623, 69.99, 'set'),
-    ('Dragón Maestro Egalt', '71809', 'Ninjago', 532, 69.99, 'set'),
-    ('Meca de Poder Elemental de Lloyd', '71817', 'Ninjago', 253, 19.99, 'set'),
-    ('Meca Elemental de la Tierra de Cole', '71806', 'Ninjago', 235, 19.99, 'set'),
-    ('Santuario de Piedra del Dragón', '71819', 'Ninjago', 1212, 119.99, 'set'),
-    ('Cañonera de la Guardia de Coruscant', '75354', 'Star Wars', 1083, 149.99, 'set'),
-    ('Halcón Milenario', '75375', 'Star Wars', 921, 84.99, 'set'),
-    ('AT-AT™', '75313', 'Star Wars', 6785, 849.99, 'set'),
-    ('Crucero de Ataque Clase Venator de la República', '75367', 'Star Wars', 5374, 649.99, 'set'),
-    ('Caminante AT-TE™', '75337', 'Star Wars', 1082, 139.99, 'set'),
-    ('The Razor Crest™', '75331', 'Star Wars', 6187, 599.99, 'set'),
-    ('Casco del Capitán Rex', '75349', 'Star Wars', 854, 69.99, 'set'),
-    ('Droideka™', '75381', 'Star Wars', 583, 64.99, 'set'),
-    ('Diorama: Carrera de Vainas de Mos Espa', '75380', 'Star Wars', 718, 79.99, 'set'),
-    ('Espíritu y Fantasma II', '75357', 'Star Wars', 1394, 169.99, 'set'),
-    ('Paz Vizsla', 'SW1172', 'Star Wars', 1, 17.99, 'minifig'),
-    ('Moff Gideon', 'SW1160', 'Star Wars', 1, 56.99, 'minifig'),
-    ('Inquisidor Marrok', 'SW1301', 'Star Wars', 1, 12.99, 'minifig'),
-    ('Darth Vader', 'SW1249', 'Star Wars', 1, 7.99, 'minifig'),
-    ('Comandante clon de asalto Cody', 'SW1233', 'Star Wars', 1, 27.99, 'minifig'),
-    ('Darth Maul', 'SW0003', 'Star Wars', 1, 24.99, 'minifig'),
-    ('El Mandaloriano', 'SW1258', 'Star Wars', 1, 9.99, 'minifig'),
-    ('Piloto caza TIE', 'SW1260', 'Star Wars', 1, 6.99, 'minifig'),
-    ('Dark Trooper', 'SW1161', 'Star Wars', 1, 8.99, 'minifig'),
-    ('Gar Saxon', 'SW1162', 'Star Wars', 1, 56.99, 'minifig'),
-    ('Wolverine', 'M2012', 'Marvel', 1, 6.99, 'minifig'),
-    ('MR. Knight', 'M2003', 'Marvel', 1, 4.99, 'minifig'),
-    ('Spider-Man', 'M2778', 'Marvel', 1, 11.99, 'minifig'),
-    ('Venom', 'M2664', 'Marvel', 1, 11.99, 'minifig');
+    ('76919', 'Coche de Carreras de Fórmula 1 McLaren 2023', 'Speed Champions', 245, 26.99, 'set'),
+    ('76909', 'Mercedes-AMG F1 W12 E Performance y Mercedes-AMG Project One', 'Speed Champions', 564, 44.99, 'set'),
+    ('76925', 'Safety Car de Aston Martin y AMR23', 'Speed Champions', 564, 49.99, 'set'),
+    ('76917', 'Nissan Skyline GT-R (R34) de 2 Fast 2 Furious', 'Speed Champions', 245, 26.99, 'set'),
+    ('76921', 'Coche de Carreras Audi S1 e-tron quattro', 'Speed Champions', 245, 26.99, 'set'),
+    ('76920', 'Deportivo Ford Mustang Dark Horse', 'Speed Champions', 344, 26.99, 'set'),
+    ('76922', 'Coches de Carreras BMW M4 GT3 y BMW M Hybrid V8', 'Speed Champions', 676, 49.99, 'set'),
+    ('76908', 'Lamborghini Countach', 'Speed Champions', 262, 24.99, 'set'),
+    ('76918', 'McLaren Solus GT y McLaren F1 LM', 'Speed Champions', 581, 44.99, 'set'),
+    ('76923', 'Superdeportivo Lamborghini Lambo V12 Vision GT', 'Speed Champions', 230, 26.99, 'set'),
+    ('76285', 'Máscara de Spider-Man', 'Marvel', 487, 69.99, 'set'),
+    ('76191', 'Guantelete del Infinito', 'Marvel', 590, 89.99, 'set'),
+    ('76251', 'Casco de Star-Lord', 'Marvel', 602, 79.99, 'set'),
+    ('76281', 'X-Jet de los X-Men', 'Marvel', 359, 84.99, 'set'),
+    ('76284', 'Figura para Construir: Duende Verde', 'Marvel', 471, 37.99, 'set'),
+    ('76276', 'Armadura Robótica de Venom vs. Miles Morales', 'Marvel', 134, 14.99, 'set'),
+    ('76269', 'Torre de los Vengadores', 'Marvel', 5201, 499.99, 'set'),
+    ('76178', 'Daily Bugle', 'Marvel', 3789, 349.99, 'set'),
+    ('76223', 'Nanoguantelete', 'Marvel', 675, 69.99, 'set'),
+    ('76210', 'Hulkbuster', 'Marvel', 4049, 549.99, 'set'),
+    ('71792', 'Moto de Carreras Transformable en Meca de Sora', 'Ninjago', 384, 47.99, 'set'),
+    ('71813', 'Dojo Sombrío de la Máscara de Lobo', 'Ninjago', 1190, 119.99, 'set'),
+    ('71822', 'Dragón Fuente del Movimiento', 'Ninjago', 1716, 149.99, 'set'),
+    ('71821', 'Meca-Dragón Titán de Cole', 'Ninjago', 1055, 99.99, 'set'),
+    ('71812', 'Meca Escalador Ninja de Kai', 'Ninjago', 623, 69.99, 'set'),
+    ('71809', 'Dragón Maestro Egalt', 'Ninjago', 532, 69.99, 'set'),
+    ('71817', 'Meca de Poder Elemental de Lloyd', 'Ninjago', 253, 19.99, 'set'),
+    ('71806', 'Meca Elemental de la Tierra de Cole', 'Ninjago', 235, 19.99, 'set'),
+    ('71819', 'Santuario de Piedra del Dragón', 'Ninjago', 1212, 119.99, 'set'),
+    ('75354', 'Cañonera de la Guardia de Coruscant', 'Star Wars', 1083, 149.99, 'set'),
+    ('75375', 'Halcón Milenario', 'Star Wars', 921, 84.99, 'set'),
+    ('75313', 'AT-AT™', 'Star Wars', 6785, 849.99, 'set'),
+    ('75367', 'Crucero de Ataque Clase Venator de la República', 'Star Wars', 5374, 649.99, 'set'),
+    ('75337', 'Caminante AT-TE™', 'Star Wars', 1082, 139.99, 'set'),
+    ('75331', 'The Razor Crest™', 'Star Wars', 6187, 599.99, 'set'),
+    ('75349', 'Casco del Capitán Rex', 'Star Wars', 854, 69.99, 'set'),
+    ('75381', 'Droideka™', 'Star Wars', 583, 64.99, 'set'),
+    ('75380', 'Diorama: Carrera de Vainas de Mos Espa', 'Star Wars', 718, 79.99, 'set'),
+    ('75357', 'Espíritu y Fantasma II', 'Star Wars', 1394, 169.99, 'set'),
+    ('SW1172', 'Paz Vizsla', 'Star Wars', 1, 17.99, 'minifig'),
+    ('SW1160', 'Moff Gideon', 'Star Wars', 1, 56.99, 'minifig'),
+    ('SW1301', 'Inquisidor Marrok', 'Star Wars', 1, 12.99, 'minifig'),
+    ('SW1249', 'Darth Vader', 'Star Wars', 1, 7.99, 'minifig'),
+    ('SW1233', 'Comandante clon de asalto Cody', 'Star Wars', 1, 27.99, 'minifig'),
+    ('SW0003', 'Darth Maul', 'Star Wars', 1, 24.99, 'minifig'),
+    ('SW1258', 'El Mandaloriano', 'Star Wars', 1, 9.99, 'minifig'),
+    ('SW1260', 'Piloto caza TIE', 'Star Wars', 1, 6.99, 'minifig'),
+    ('SW1161', 'Dark Trooper', 'Star Wars', 1, 8.99, 'minifig'),
+    ('SW1162', 'Gar Saxon', 'Star Wars', 1, 56.99, 'minifig'),
+    ('M2012', 'Wolverine', 'Marvel', 1, 6.99, 'minifig'),
+    ('M2003', 'MR. Knight', 'Marvel', 1, 4.99, 'minifig'),
+    ('M2778', 'Spider-Man', 'Marvel', 1, 11.99, 'minifig'),
+    ('M2664', 'Venom', 'Marvel', 1, 11.99, 'minifig');
 
 INSERT INTO Usuarios (username, password, root, nombre, apellidos, poblacion, provincia, codigo_postal, direccion, pfp) 
 VALUES 

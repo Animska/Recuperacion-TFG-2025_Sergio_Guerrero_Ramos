@@ -11,7 +11,7 @@
     <script src="../NODE_MODULES/bootstrap/dist/js/bootstrap.bundle.min.js"></script>    
 </head>
 <body>
-    <header class="bg-yellowLego pt-4">
+    <header class="bg-yellowLego pt-4 sticky-top">
         <nav class="navbar navbar-expand-lg navbar-dark bg-yellowLego sticky-top shadow-lg py-3">
             <div class="container-fluid mt-2">
                 <div class="row w-100 align-items-center">
@@ -61,7 +61,7 @@
                         <div id="precioCarrito" class="border-top">
 
                         </div>
-                        <div id="botonCarrito" class="justify-content-center d-flex">
+                        <div id="botonTramitar" class="justify-content-center d-flex">
                             <button type="button" class="btn btn-redLego text-light fs-3 fw-bolder">
                                 TRAMITAR PEDIDO
                             </button>
@@ -148,6 +148,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div id="errorLogin" class="text-danger text-center bg-danger bg-opacity-25"></div>
+                <div id="avisoSignup" class="text-success text-center bg-success bg-opacity-25"></div>
                 <div class="modal-body">
                     <form action="" method="POST" id="formLogin">
                         <div class="mb-3">

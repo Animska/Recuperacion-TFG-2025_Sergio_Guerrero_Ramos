@@ -13,7 +13,7 @@ function cargarDatosProducto(codigo) {
                 if (producto && typeof producto === 'object' && !producto.error) {
 
                     // Cargar los datos del producto directamente
-                    $('.producto').attr('data-codigoProducto',producto.codigo);
+                    $('.producto').attr('data-codigoProducto',producto.ID_PRODUCTO);
                     $('#n_articulo').html(producto.codigo);   // Muestra el código del producto
                     $('#nombre_set').html(producto.nombre);   // Muestra el nombre del producto
                     // $('title').html(producto.nombre)
@@ -26,7 +26,7 @@ function cargarDatosProducto(codigo) {
                     
                     $('#precio_producto').html(producto.precio);
                     $('#tema').html(producto.tema); 
-                    var imagen='../IMAGES/productos/'+producto.codigo+'.webp';
+                    var imagen='../IMAGES/productos/'+producto.ID_PRODUCTO+'.webp';
                     $('#imagen_producto').attr('src', imagen);
                 } else {
                     console.log("Producto no encontrado o error en la respuesta:", producto);
@@ -58,9 +58,9 @@ function cargarProductos(){
             productos.html('')
             let contador=1
             $.each(productosParse, function (index, producto) {
-                let productoString ='<div class="card position-relative" data-codigoProducto='+producto.codigo+' style="width: 30%;">\n' +
+                let productoString ='<div class="card position-relative" data-codigoProducto='+producto.ID_PRODUCTO+' style="width: 30%;">\n' +
                                     '<div class="image-container" style="height: 200px; overflow: hidden;">\n' +
-                                    '<a href="../HTML/index.html?codigo='+producto.codigo+'" class="text-decoration-none text-dark"><img src="../IMAGES/productos/' + producto.codigo + '.webp" class="card-img-top p-3 img-fluid" alt="..." style="height: 100%; width: 100%; object-fit: contain;">\n' +
+                                    '<a href="../HTML/index.html?codigo='+producto.ID_PRODUCTO+'" class="text-decoration-none text-dark"><img src="../IMAGES/productos/' + producto.ID_PRODUCTO + '.webp" class="card-img-top p-3 img-fluid" alt="..." style="height: 100%; width: 100%; object-fit: contain;">\n' +
                                     '</div>\n' +
                                     '<div class="card-body d-flex flex-column justify-content-between">\n' +
                                     '    <h5 class="card-title fw-bold text-uppercase">' + producto.nombre + '</h5><a>\n' +

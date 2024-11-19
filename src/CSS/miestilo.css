@@ -76,16 +76,30 @@ header{
 
 /* shopping cart */
 #productosCarrito{
-    height: 60vh;
+    max-height: 60vh;
 }
 
 #divCarrito .dropdown-menu{
     width: 40vw;
 }
 
-
-
 .productoCarrito img{
-    height: 20vh;
+    max-height: 20vh;
     object-fit: contain;
+}
+
+.pedido img{
+    height: 15vh;
+}
+
+@keyframes meneo {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(5deg); }
+    50% { transform: rotate(-5deg); }
+    75% { transform: rotate(5deg); }
+    100% { transform: rotate(0deg); }
+}
+
+.meneando {
+    animation: meneo 0.5s ease;
 }

@@ -1,5 +1,6 @@
 <?php
 include_once('../PHP/ACCESODB.php');
+    
 
     $user = $_POST['user'];
     $password = $_POST['password'];
@@ -12,13 +13,10 @@ include_once('../PHP/ACCESODB.php');
         return;
     }
     if(json_decode($resultado,true)['password']!=$password){
-        echo 'error';
+        echo 'noPassword';
         return;
     }else{
         echo $resultado;
     }
     
-    
-    
-
 ?>

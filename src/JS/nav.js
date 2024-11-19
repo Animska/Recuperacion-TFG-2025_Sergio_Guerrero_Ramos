@@ -10,9 +10,9 @@ function loadProducts(dato) {
                 $('#tema').html(dato);
                 let productos = $('#productos')
                 $.each(productosParse, function (index, producto) {
-                    let productoString = '<div class="producto card p-3 position-relative m-2 cursor:pointer" data-codigoProducto="'+producto.codigo+'" style="width: 23%;">\n' +
+                    let productoString = '<div class="producto card p-3 col-3 position-relative m-2 cursor:pointer" data-codigoProducto="'+producto.ID_PRODUCTO+'" style="width: 23%;">\n' +
                                         '<div class="image-container" style="height: 200px; overflow: hidden;">\n' +
-                                        '<a href="../HTML/index.html?codigo='+producto.codigo+'" class="text-decoration-none text-dark"><img src="../IMAGES/productos/' + producto.codigo + '.webp" class="card-img-top p-3 img-fluid" alt="..." style="height: 100%; width: 100%; object-fit: contain;">\n' +
+                                        '<a href="../HTML/index.html?codigo='+producto.ID_PRODUCTO+'" class="text-decoration-none text-dark"><img src="../IMAGES/productos/' + producto.ID_PRODUCTO + '.webp" class="card-img-top p-3 img-fluid" alt="..." style="height: 100%; width: 100%; object-fit: contain;">\n' +
                                         '</div>\n' +
                                         '<div class="card-body d-flex flex-column justify-content-between">\n' +
                                         '    <h5 class="card-title fw-bold text-uppercase nombre">' + producto.nombre + '</h5></a>\n' +
@@ -59,16 +59,22 @@ function llenarCarrito(response){
 
             // Puedes crear tu HTML dinámicamente aquí, por ejemplo:
             let productoCarrito = `
-                <div class="productoCarrito g-1 m-0 row flex-nowrap">
+                <div class="productoCarrito g-1 m-0 row flex-nowrap" data-codigoproducto="`+producto.ID_PRODUCTO+`">
                     <div class='col-4'>
-                    <img class='p-3 w-100' src='../IMAGES/productos/`+producto.codigo+`.webp'</img>
+                    <img class='p-3 w-100' src='../IMAGES/productos/`+producto.ID_PRODUCTO+`.webp'</img>
                     </div>
                     <div class='col-5'>
                         <p class=" fs-3 fw-bolder p-0">`+producto.nombre+`</p>
                         <p class=" fs-3 fw-bolder text-primary p-0">`+producto.precio+`€</p>
                     </div>
-                    <div class='col-3'>
-                    <p class=" productoCarrito_cantidad p-0">`+cantidad+`</p>
+                    <div class='col-3 d-flex justify-content-center align-items-center'>
+                    <div class="contadorProductoCarrito">
+                        <div class="contadorProducto border rounded d-flex justify-content center align-items-center">
+                            <button type="button" class="btn btn-redLego producto_mas fw-bolder"><i class="bi bi-plus"></i></button>
+                            <p class="productoCarrito_cantidad fw-bolder p-0 mx-3 my-0">`+cantidad+`</p>
+                            <button type="button" class="btn btn-redLego producto_menos"><i class="bi bi-dash"></i></button>
+                        </div>
+                    </div>
                     </div>
                     
                 </div>
@@ -109,7 +115,6 @@ function rebindClicks(){
             success: function (respuesta) {
                 $('#body').html(respuesta)
                 window.history.pushState({},'','../HTML/index.html')
-                rebindClicks()
             },
             error: function () {
                 alert('Error al cargar la pagina Home');
@@ -133,13 +138,14 @@ function rebindClicks(){
         });
     })
 
-    $('.añadirCarrito').on('click',function(event){
-        event.preventDefault();
-        
-    })
-
     $('#body').on('click','.añadirCarrito',function(event){
         event.preventDefault();
+
+        $('#divCarrito').addClass('meneando')
+        setTimeout(() => {
+            $('#divCarrito').removeClass('meneando');
+        }, 500);
+
         let codigoProducto = $(this).closest('.producto').data('codigoproducto');
         $.ajax({
             url: '../PHP/carrito.php',
@@ -153,6 +159,21 @@ function rebindClicks(){
             }
         });
 
+    })
+
+
+    $('#pedidos').on('click',function(){
+        $.ajax({
+            url: './pedidos.html',
+            type: 'GET',
+            success: function (respuesta) {
+                $('#body').html(respuesta)
+                window.history.pushState({},'','../HTML/index.html')
+            },
+            error: function () {
+                alert('Error al cargar la pagina Home');
+            }
+        });
     })
 
 }
@@ -172,14 +193,61 @@ $(function () {
         }
     });
 
-    $('#botonCarrito').on('click',function(event){
+    $('#divCarrito').on('click', '.dropdown-menu', function (e) {
+        e.stopPropagation();
+    });
+
+    $('#productosCarrito').on('click','.producto_mas',function(event){
+        event.preventDefault();
+
+        let codigoProducto = $(this).closest('.productoCarrito').data('codigoproducto');
+        $.ajax({
+            url: '../PHP/carrito.php',
+            type: 'POST',
+            data:{'codigo':codigoProducto},
+            success: function(response) {
+                llenarCarrito(response)
+            },
+            error: function(xhr, status, error) {
+                console.error("Error loading search page:", error);
+            }
+        });
+
+    })
+
+    $('#productosCarrito').on('click','.producto_menos',function(event){
+        event.preventDefault();
+
+        let codigoProducto = $(this).closest('.productoCarrito').data('codigoproducto');
+        $.ajax({
+            url: '../PHP/carrito.php',
+            type: 'POST',
+            data:{
+                'codigoM':codigoProducto,
+                'menos':'menos'
+            },
+            success: function(response) {
+                llenarCarrito(response)
+            },
+            error: function(xhr, status, error) {
+                console.error("Error loading search page:", error);
+            }
+        });
+
+    })
+
+    $('#botonTramitar').on('click',function(event){
         event.preventDefault()
         $.ajax({
             url: '../PHP/carrito.php',
             type: 'POST',
-            data:{'borrar':'carrito'},
+            data:{
+                'idUsuario':window.localStorage.getItem('idUsuario'),
+                'precioTotal':$('#precioCarrito span').html()
+            },
             success: function(response) {
-                llenarCarrito(response)
+
+                $('#productosCarrito').html('')
                 $('#contadorProductos').html(0)
                 $('#precioCarrito').html('<p class="fs-3 fw-bolder m-3">PRECIO TOTAL: <span class="text-primary">0€</span></p>')
             },
@@ -251,6 +319,7 @@ $(function () {
                 password: $('#password').val()
             },
             success: function (respuesta) {
+                console.log(respuesta)
                 switch(respuesta){
                     case 'noUser':
                         $('#errorLogin').html('Este usuario no existe')
@@ -261,6 +330,7 @@ $(function () {
                     default:
                         var usuario = JSON.parse(respuesta)
                         window.localStorage.setItem('inicioSesion','true')
+                        window.localStorage.setItem('idUsuario',usuario.ID_USER)
                         window.localStorage.setItem('imagenUsuario',usuario.pfp)
                         window.localStorage.setItem('nombreUsuario',usuario.nombre)
                         window.localStorage.setItem('root',usuario.root)
@@ -303,16 +373,14 @@ $('#formSignUp').on('submit',function(event){
             if(respuesta=='error'){
                 $('#errorLogin').html('error al registrarte')
             }else{
-                $('#errorLogin').removeClass('bg-danger')
-                $('#errorLogin').addClass('bg-success')
-                $('#errorLogin').html('Usuario registrado satisfactoriamente, seras redirrigido al inicio')
+
+                $('#avisoSignup').html('Usuario registrado satisfactoriamente, seras redirrigido al inicio')
 
                 setTimeout(function() {
                     location.reload(true);
-                }, 5000);
+                }, 500);
                 
                 
-                $('#errorLogin').addClass('bg-danger')
             }
 
             
@@ -332,5 +400,8 @@ $('#toggleSignUp').on('click',function(event){
     $('#formLogin').addClass('d-none')
     $('#formSignUp').removeClass('d-none')
 })
+
+
+
 
 })
