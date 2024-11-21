@@ -103,3 +103,16 @@ header{
 .meneando {
     animation: meneo 0.5s ease;
 }
+
+.fav{
+    cursor: pointer;
+}
+
+@keyframes salto {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+.saltar {
+    animation: salto 0.5s ease;
+}

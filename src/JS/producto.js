@@ -14,7 +14,7 @@ function cargarDatosProducto(codigo) {
 
                     // Cargar los datos del producto directamente
                     $('.producto').attr('data-codigoProducto',producto.ID_PRODUCTO);
-                    $('#n_articulo').html(producto.codigo);   // Muestra el código del producto
+                    $('#n_articulo').html(producto.ID_PRODUCTO);   // Muestra el código del producto
                     $('#nombre_set').html(producto.nombre);   // Muestra el nombre del producto
                     // $('title').html(producto.nombre)
 
@@ -57,19 +57,19 @@ function cargarProductos(){
             let productos = $('#destacadosEnProducto')
             productos.html('')
             let contador=1
-            $.each(productosParse, function (index, producto) {
-                let productoString ='<div class="card position-relative" data-codigoProducto='+producto.ID_PRODUCTO+' style="width: 30%;">\n' +
+            $.each(productosParse, function (index, producto2) {
+                let productoString ='<div class="card producto position-relative" data-codigoProducto='+producto2.ID_PRODUCTO+' style="width: 30%;">\n' +
                                     '<div class="image-container" style="height: 200px; overflow: hidden;">\n' +
-                                    '<a href="../HTML/index.html?codigo='+producto.ID_PRODUCTO+'" class="text-decoration-none text-dark"><img src="../IMAGES/productos/' + producto.ID_PRODUCTO + '.webp" class="card-img-top p-3 img-fluid" alt="..." style="height: 100%; width: 100%; object-fit: contain;">\n' +
+                                    '<a href="../HTML/index.html?codigo='+producto2.ID_PRODUCTO+'" class="text-decoration-none text-dark"><img src="../IMAGES/productos/' + producto2.ID_PRODUCTO + '.webp" class="card-img-top p-3 img-fluid" alt="..." style="height: 100%; width: 100%; object-fit: contain;">\n' +
                                     '</div>\n' +
                                     '<div class="card-body d-flex flex-column justify-content-between">\n' +
-                                    '    <h5 class="card-title fw-bold text-uppercase">' + producto.nombre + '</h5><a>\n' +
-                                    '    <h5 class="card-text fw-bold">' + producto.precio + ' €</h5>\n' +
+                                    '    <h5 class="card-title fw-bold text-uppercase">' + producto2.nombre + '</h5><a>\n' +
+                                    '    <h5 class="card-text fw-bold">' + producto2.precio + ' €</h5>\n' +
                                     '    <div class="botonCentrado text-center mt-2">\n' +
                                     '        <a href="#" class="btn btn-redLego fw-bold d-inline-block mx-auto añadirCarrito">Añadir al carrito</a>\n' +
                                     '    </div>\n' +
                                     '</div>\n' +
-                                    '<span><i class="bi bi-heart position-absolute top-0 end-0 me-2 fs-3 text-primary" id="fav"></i></span>\n' +
+                                    '<span><i class="bi bi-heart position-absolute top-0 end-0 me-2 fs-3 text-primary fav"></i></span>\n' +
                                     '</div>\n';
 
                 productos.append(productoString);

@@ -21,7 +21,7 @@ function loadProducts(dato) {
                                         '        <a href="#" class="btn btn-redLego  fw-bold d-inline-block mx-auto añadirCarrito">Añadir al carrito</a>\n' +
                                         '    </div>\n' +
                                         '</div>\n' +
-                                        '<span><i class="bi bi-heart position-absolute top-0 end-0 me-2 fs-3 text-primary" id="fav"></i></span>\n' +
+                                        '<span><i class="bi bi-heart position-absolute top-0 end-0 me-2 fs-3 text-primary fav"></i></span>\n' +
                                         '</div>\n';
     
                     productos.append(productoString);
@@ -91,6 +91,35 @@ function llenarCarrito(response){
     $('#precioCarrito').html('<p class="fs-3 fw-bolder m-3">PRECIO TOTAL: <span class="text-primary">'+parseFloat(precioTotal.toFixed(2))+'€</span></p>')
 }
 
+function rebindFavs(){
+    $.ajax({
+        url: '../PHP/favoritos.php',
+        type: 'POST',
+        data:{'idUser':window.localStorage.getItem('idUsuario')},
+        success: function (respuesta) {
+
+            setTimeout(()=>{
+                $(document).ready(function(){
+                    $('.producto').each(function(){
+                        let codigoProducto = $(this).closest('.producto').data('codigoproducto')
+                        if(respuesta.includes(codigoProducto)){
+                            $(this).find('i').addClass('bi-heart-fill').removeClass('bi-heart')
+                        }
+                    })
+                })
+    
+                console.log(respuesta)
+            },180);
+            
+
+        },
+        error: function () {
+            alert('Error al cargar la pagina Home');
+        }
+    });
+}
+
+
 function rebindClicks(){
     $('#navbar').on('click','#SETS',function(){
         $.ajax({
@@ -100,6 +129,7 @@ function rebindClicks(){
                 $('#body').html(respuesta)
                 window.history.pushState({},'','../HTML/index.html')
                 loadProducts('set');
+                rebindFavs()
                 
             },
             error: function () {
@@ -115,6 +145,7 @@ function rebindClicks(){
             success: function (respuesta) {
                 $('#body').html(respuesta)
                 window.history.pushState({},'','../HTML/index.html')
+                rebindFavs()
             },
             error: function () {
                 alert('Error al cargar la pagina Home');
@@ -131,6 +162,7 @@ function rebindClicks(){
                 window.history.pushState({},'','../HTML/index.html')
                 $('#body').html(response)
                 loadProducts('minifig');
+                rebindFavs()
             },
             error: function(xhr, status, error) {
                 console.error("Error loading search page:", error);
@@ -138,33 +170,25 @@ function rebindClicks(){
         });
     })
 
-    $('#body').on('click','.añadirCarrito',function(event){
-        event.preventDefault();
-
-        $('#divCarrito').addClass('meneando')
-        setTimeout(() => {
-            $('#divCarrito').removeClass('meneando');
-        }, 500);
-
-        let codigoProducto = $(this).closest('.producto').data('codigoproducto');
-        $.ajax({
-            url: '../PHP/carrito.php',
-            type: 'POST',
-            data:{'codigo':codigoProducto},
-            success: function(response) {
-                llenarCarrito(response)
-            },
-            error: function(xhr, status, error) {
-                console.error("Error loading search page:", error);
-            }
-        });
-
-    })
-
+    
 
     $('#pedidos').on('click',function(){
         $.ajax({
             url: './pedidos.html',
+            type: 'GET',
+            success: function (respuesta) {
+                $('#body').html(respuesta)
+                window.history.pushState({},'','../HTML/index.html')
+            },
+            error: function () {
+                alert('Error al cargar la pagina Home');
+            }
+        });
+    })
+
+    $('#wishlist').on('click',function(){
+        $.ajax({
+            url: './wishlist.html',
             type: 'GET',
             success: function (respuesta) {
                 $('#body').html(respuesta)
@@ -192,6 +216,29 @@ $(function () {
             console.error("Error loading search page:", error);
         }
     });
+
+    $('#body').on('click','.añadirCarrito',function(event){
+        event.preventDefault();
+
+        $('#divCarrito').addClass('meneando')
+        setTimeout(() => {
+            $('#divCarrito').removeClass('meneando');
+        }, 500);
+
+        let codigoProducto = $(this).closest('.producto').data('codigoproducto');
+        $.ajax({
+            url: '../PHP/carrito.php',
+            type: 'POST',
+            data:{'codigo':codigoProducto},
+            success: function(response) {
+                llenarCarrito(response)
+            },
+            error: function(xhr, status, error) {
+                console.error("Error loading search page:", error);
+            }
+        });
+
+    })
 
     $('#divCarrito').on('click', '.dropdown-menu', function (e) {
         e.stopPropagation();
@@ -286,6 +333,8 @@ $(function () {
             success: function (respuesta) {
                 $('#body').html(respuesta)
                 rebindClicks()
+                rebindFavs()
+                
                 
 
             },
@@ -346,6 +395,7 @@ $(function () {
                             $('#opcionesAdmin').removeClass('d-none')
                         }
 
+                        rebindFavs()
                 }
             },
             error: function () {
@@ -373,13 +423,12 @@ $('#formSignUp').on('submit',function(event){
             if(respuesta=='error'){
                 $('#errorLogin').html('error al registrarte')
             }else{
-
+                console.log(respuesta)
                 $('#avisoSignup').html('Usuario registrado satisfactoriamente, seras redirrigido al inicio')
-
+                
                 setTimeout(function() {
                     location.reload(true);
                 }, 500);
-                
                 
             }
 
@@ -401,7 +450,52 @@ $('#toggleSignUp').on('click',function(event){
     $('#formSignUp').removeClass('d-none')
 })
 
+$('#body').on('click', '.fav', function(){
+    if (this.classList.contains('bi-heart')) {
+        this.classList.remove('bi-heart');
+        this.classList.add('bi-heart-fill');
+
+        let producto = this.closest('.producto');
+        $.ajax({
+            url: '../PHP/wishlist.php',
+            type: 'POST',
+            data:{
+                'wishlist':'add',
+                'codigo':producto.dataset.codigoproducto,
+                'idUsuario':window.localStorage.getItem('idUsuario')
+            },
+            success: function (respuesta) {
+                console.log(respuesta)
+            },
+            error: function () {
+                alert('Error al cargar la pagina Home');
+            }
+        });
+
+    } else if (this.classList.contains('bi-heart-fill')) {
+        this.classList.remove('bi-heart-fill');
+        this.classList.add('bi-heart');
 
 
+        let producto = this.closest('.producto');
+        $.ajax({
+            url: '../PHP/wishlist.php',
+            type: 'POST',
+            data:{
+                'wishlist':'remove',
+                'codigo':producto.dataset.codigoproducto,
+                'idUsuario':window.localStorage.getItem('idUsuario')
+            },
+            success: function (respuesta) {
+                console.log(respuesta)
+            },
+            error: function () {
+                alert('Error al cargar la pagina Home');
+            }
+        });
+    }
+});
+
+rebindFavs()
 
 })

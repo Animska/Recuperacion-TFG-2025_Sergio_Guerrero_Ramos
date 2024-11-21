@@ -122,3 +122,8 @@ VALUES
     ('root', 'root', TRUE, 'Sergio', 'Guerrero Ramos', 'Fuente del Maestre', 'Badajoz', '06360', 'Calle Falsa 123', '10'),
     ('user', 'user', FALSE, 'Juan', 'Perez', 'Barcelona', 'Barcelona', '08001', 'Calle Real 456', '2');
 
+INSERT INTO wishlists (ID_USER) 
+VALUES 
+    (1),
+    (2);
+

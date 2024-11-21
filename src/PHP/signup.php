@@ -15,14 +15,15 @@ include_once('../PHP/ACCESODB.php');
     // Check if user exists
     $resultado =  BD::insertUser($user, $password, $root,$nombre ,$apellidos,$poblacion,$provincia,$codPostal, $direccion,$pfp );
     
-    if(array_key_exists('message',json_decode($resultado,true),) || array_key_exists('error',json_decode($resultado,true))){
+    if(array_key_exists('message',json_decode($resultado,true),) && array_key_exists('error',json_decode($resultado,true))){
         echo $resultado;
         return;
     }else{
+        $usuarioCreado = BD::getUser($_POST['user']); // Esto devuelve una cadena JSON
+        $usuarioArray = json_decode($usuarioCreado, true); // Decodifica la cadena JSON a un array asociativo
+        BD::insertWishlist($usuarioArray['ID_USER']);
+
         echo $resultado;
     }
-    
-    
-    
 
 ?>

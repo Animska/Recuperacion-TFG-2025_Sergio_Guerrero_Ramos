@@ -21,7 +21,7 @@ function cargarProductos(){
                                     '        <a href="#" class="btn btn-redLego fw-bold d-inline-block mx-auto añadirCarrito">Añadir al carrito</a>\n' +
                                     '    </div>\n' +
                                     '</div>\n' +
-                                    '<span><i class="bi bi-heart position-absolute top-0 end-0 me-2 fs-3 text-primary" id="fav"></i></span>\n' +
+                                    '<span><i class="bi bi-heart position-absolute top-0 end-0 me-2 fs-3 text-primary fav"></i></span>\n' +
                                     '</div>\n';
 
                 productos.append(productoString);
@@ -60,7 +60,7 @@ function cargarProductos2(){
                                     '        <a href="#" class="btn btn-redLego fw-bold d-inline-block mx-auto añadirCarrito">Añadir al carrito</a>\n' +
                                     '    </div>\n' +
                                     '</div>\n' +
-                                    '<span><i class="bi bi-heart position-absolute top-0 end-0 me-2 fs-3 text-primary" id="fav"></i></span>\n' +
+                                    '<span><i class="bi bi-heart position-absolute top-0 end-0 me-2 fs-3 text-primary fav"></i></span>\n' +
                                     '</div>\n';
 
                 productos.append(productoString);
@@ -99,7 +99,7 @@ function loadProductsTheme(theme) {
                                         '        <a href="#" class="btn btn-redLego fw-bold d-inline-block mx-auto añadirCarrito">Añadir al carrito</a>\n' +
                                         '    </div>\n' +
                                         '</div>\n' +
-                                        '<span><i class="bi bi-heart position-absolute top-0 end-0 me-2 fs-3 text-primary" id="fav"></i></span>\n' +
+                                        '<span><i class="bi bi-heart position-absolute top-0 end-0 me-2 fs-3 text-primary fav"></i></span>\n' +
                                         '</div>\n';
     
                     productos.append(productoString);
@@ -123,6 +123,10 @@ $(function (){
     cargarProductos()
     cargarProductos2()
 
+    
+
+    
+
     $('.carousel-link').on('click', function(event) {
         let theme = $(this).data('theme');
         $.ajax({
@@ -131,6 +135,7 @@ $(function (){
             success: function(response) {
                 $('#body').html(response)
                 loadProductsTheme(theme);
+                rebindFavs()
             },
             error: function(xhr, status, error) {
                 console.error("Error loading search page:", error);
@@ -146,6 +151,7 @@ $(function (){
             success: function(response) {
                 $('#body').html(response)
                 loadProducts('todo');
+                rebindFavs()
             },
             error: function(xhr, status, error) {
                 console.error("Error loading search page:", error);

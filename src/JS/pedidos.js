@@ -1,3 +1,7 @@
+function isEmpty( el ){
+    return !$.trim(el.html())
+}
+
 function rellenarDatosUsuario(idUsuario){
     $.ajax({
         url: '../PHP/pedidos.php',
@@ -86,6 +90,12 @@ $(function () {
             console.log(`Pedido #${index + 1}:`);
             rellenarDatosUsuario(window.localStorage.getItem('idUsuario'))
         })
+    },300);
+
+    setTimeout(()=>{
+        if (isEmpty($('#pedidosUser'))) {
+            $('#pedidosUser').html('<h2>No se encontraron productos según este criterio</h2>');
+        }
     },300);
 });
 
