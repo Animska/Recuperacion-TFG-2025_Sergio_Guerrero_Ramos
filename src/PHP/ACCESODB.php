@@ -169,6 +169,90 @@ Class BD{
         }
     }
     
+    public static function deleteProducto($idProducto) {
+        try {
+            // Consulta para eliminar un usuario por su ID
+            $sql = "DELETE FROM productos WHERE ID_PRODUCTO = ?";
+            $conn = self::conexion();
+            $stmt = $conn->prepare($sql);
+            
+            // 's' especifica que el parámetro es una cadena (string)
+            $stmt->bind_param("s", $idProducto);
+            
+            // Ejecutar la consulta
+            $stmt->execute();
+            
+            // Verificar si se eliminó algún registro
+            if ($stmt->affected_rows > 0) {
+                return json_encode(["message" => "producto eliminado con éxito"]);
+            } else {
+                return json_encode(["message" => "No se encontró el producto o no se pudo eliminar"]);
+            }
+        } catch (Exception $th) {
+            // Devolver el mensaje de error en formato JSON
+            return json_encode(["error" => "Error al eliminar el producto: " . $th->getMessage()]);
+        } finally {
+            // Asegurarse de cerrar la declaración preparada y la conexión
+            if (isset($stmt)) {
+                $stmt->close();
+            }
+            if (isset($conn)) {
+                $conn->close();
+            }
+        }
+    }
+
+    public static function editProducto($nombre, $tema, $num_piezas, $precio, $tipo,$ID_PRODUCTO) {
+        try {
+            $sql = "UPDATE productos SET nombre = ?, tema = ?, num_piezas = ?, precio = ?, tipo = ? WHERE ID_PRODUCTO = ?";
+            $conn = self::conexion();
+            $stmt = $conn->prepare($sql);
+            
+            // Vincular parámetros
+            $stmt->bind_param("ssidss", $nombre, $tema, $num_piezas, $precio, $tipo, $ID_PRODUCTO);
+            
+            // Ejecutar la consulta
+            $stmt->execute();
+            
+            if ($stmt->affected_rows > 0) {
+                return json_encode(["success" => true, "message" => "Producto actualizado correctamente"]);
+            } else {
+                return json_encode(["success" => false, "message" => "No se encontró el producto o no se realizaron cambios"]);
+            }
+        } catch (Exception $th) {
+            throw new Exception("Error al editar producto: " . $th->getMessage());
+        } finally {
+            // Cerrar la declaración preparada y la conexión
+            $stmt->close();
+            $conn->close();
+        }
+    }
+    
+
+    //USERS
+    public static function getUsers() {
+        try {
+            $sql="SELECT * FROM usuarios";
+            $conn = self::conexion();
+            $stmt = $conn->prepare($sql);
+            // Ejecutar la consulta
+            $stmt->execute();
+            $result = $stmt->get_result();
+            if ($result->num_rows > 0) {
+                $usuarios = $result->fetch_all(MYSQLI_ASSOC); // Usa fetch_all para obtener todos los resultados y transformarlos en un array asociativo
+                return json_encode($usuarios);
+            } else {
+                return "0 resultados";
+            }
+        } catch (Exception $th) {
+            throw new Exception("Error al obtener Productos: " . $th->getMessage());
+        }finally {
+            // Cerrar la declaración preparada y la conexión
+            $stmt->close();
+            $conn->close();
+        }
+    }
+
     public static function getUser($username) {
         try {
             // Consulta para seleccionar un producto por su código
@@ -243,6 +327,40 @@ Class BD{
         }
     }
 
+    public static function deleteUser($idUser) {
+        try {
+            // Consulta para eliminar un usuario por su ID
+            $sql = "DELETE FROM usuarios WHERE ID_USER = ?";
+            $conn = self::conexion();
+            $stmt = $conn->prepare($sql);
+            
+            // 's' especifica que el parámetro es una cadena (string)
+            $stmt->bind_param("s", $idUser);
+            
+            // Ejecutar la consulta
+            $stmt->execute();
+            
+            // Verificar si se eliminó algún registro
+            if ($stmt->affected_rows > 0) {
+                return json_encode(["message" => "Usuario eliminado con éxito"]);
+            } else {
+                return json_encode(["message" => "No se encontró el usuario o no se pudo eliminar"]);
+            }
+        } catch (Exception $th) {
+            // Devolver el mensaje de error en formato JSON
+            return json_encode(["error" => "Error al eliminar el usuario: " . $th->getMessage()]);
+        } finally {
+            // Asegurarse de cerrar la declaración preparada y la conexión
+            if (isset($stmt)) {
+                $stmt->close();
+            }
+            if (isset($conn)) {
+                $conn->close();
+            }
+        }
+    }
+    
+
     public static function insertUser($username, $password, $root, $nombre, $apellidos, $poblacion, $provincia, $codigo_postal, $direccion, $pfp) {
         try {
             // Consulta SQL para insertar un usuario
@@ -293,6 +411,76 @@ Class BD{
         }
     }
 
+    public static function editUser($username, $password, $root, $nombre, $apellidos, $poblacion, $provincia, $codigo_postal, $direccion,$idUsuario) {
+        try {
+            $sql = "UPDATE usuarios SET username = ?, password = ?, root = ?, nombre = ?, apellidos = ?, poblacion = ?, provincia = ?, codigo_postal = ?, direccion = ? WHERE ID_USER = ?";;
+            $conn = self::conexion();
+            $stmt = $conn->prepare($sql);
+            
+            // Vincular parámetros
+            $stmt->bind_param("ssissssssi", $username, $password, $root, $nombre, $apellidos, $poblacion, $provincia, $codigo_postal, $direccion,$idUsuario);
+            
+            // Ejecutar la consulta
+            $stmt->execute();
+            
+            if ($stmt->affected_rows > 0) {
+                return json_encode(["success" => true, "message" => "Usuario actualizado correctamente"]);
+            } else {
+                return json_encode(["success" => false, "message" => "No se encontró el usuario o no se realizaron cambios"]);
+            }
+        } catch (Exception $th) {
+            throw new Exception("Error al editar usuario: " . $th->getMessage());
+        } finally {
+            // Cerrar la declaración preparada y la conexión
+            $stmt->close();
+            $conn->close();
+        }
+    }
+    
+
+    public static function insertProducto($ID_PRODUCTO, $nombre, $tema, $num_piezas, $precio, $tipo) {
+        try {
+            $sql = "INSERT INTO productos (ID_PRODUCTO, nombre, tema, num_piezas, precio, tipo) 
+                    VALUES (?, ?, ?, ?, ?, ?)";
+            $conn = self::conexion();
+            $stmt = $conn->prepare($sql);
+    
+            if (!$stmt) {
+                throw new Exception("Error en la preparación de la sentencia: " . $conn->error);
+            } 
+    
+            $stmt->bind_param("sssids", 
+                $ID_PRODUCTO, 
+                $nombre, 
+                $tema, 
+                $num_piezas, 
+                $precio, 
+                $tipo
+            );
+    
+            if ($stmt->execute()) {
+                return json_encode(["success" => true, "message" => "Producto insertado correctamente"]);
+            } else {
+                throw new Exception("Error al ejecutar la sentencia: " . $stmt->error);
+            }
+    
+        } catch (Exception $e) {
+            return json_encode(["success" => false, "error" => "Error al insertar producto: " . $e->getMessage()]);
+        } finally {
+            if (isset($stmt)) {
+                $stmt->close();
+            }
+            if (isset($conn)) {
+                $conn->close();
+            }
+        }
+    }
+    
+
+
+
+
+    //PEDIDOS
     public static function insertPedido($precio_total, $fecha_envio, $ID_usuario) {
         try {
             // Consulta SQL para insertar un usuario

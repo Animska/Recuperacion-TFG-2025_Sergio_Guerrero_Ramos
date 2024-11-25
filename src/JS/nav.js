@@ -69,10 +69,10 @@ function llenarCarrito(response){
                     </div>
                     <div class='col-3 d-flex justify-content-center align-items-center'>
                     <div class="contadorProductoCarrito">
-                        <div class="contadorProducto border rounded d-flex justify-content center align-items-center">
-                            <button type="button" class="btn btn-redLego producto_mas fw-bolder"><i class="bi bi-plus"></i></button>
+                        <div class="contadorProducto border rounded d-flex justify-content center align-items-center flex-column flex-md-row">
+                            <button type="button" class="btn btn-redLego producto_mas fw-bolder"><i class="bi bi-plus fw-bolder"></i></button>
                             <p class="productoCarrito_cantidad fw-bolder p-0 mx-3 my-0">`+cantidad+`</p>
-                            <button type="button" class="btn btn-redLego producto_menos"><i class="bi bi-dash"></i></button>
+                            <button type="button" class="btn btn-redLego producto_menos"><i class="bi bi-dash fw-bolder"></i></button>
                         </div>
                     </div>
                     </div>
@@ -189,6 +189,20 @@ function rebindClicks(){
     $('#wishlist').on('click',function(){
         $.ajax({
             url: './wishlist.html',
+            type: 'GET',
+            success: function (respuesta) {
+                $('#body').html(respuesta)
+                window.history.pushState({},'','../HTML/index.html')
+            },
+            error: function () {
+                alert('Error al cargar la pagina Home');
+            }
+        });
+    })
+
+    $('#opcionesAdmin').on('click',function(){
+        $.ajax({
+            url: './admin.html',
             type: 'GET',
             success: function (respuesta) {
                 $('#body').html(respuesta)

@@ -35,9 +35,7 @@ header{
     background-size: cover;
 }
 
-#hero_text{
-    font-size: 5em;
-}
+
 
 .carousel-control-next,
 .carousel-control-prev {
@@ -92,6 +90,11 @@ header{
     height: 15vh;
 }
 
+.productoAdmin img,.usuarioAdmin img{
+    height: 15vh;
+}
+
+
 @keyframes meneo {
     0% { transform: rotate(0deg); }
     25% { transform: rotate(5deg); }
@@ -116,3 +119,81 @@ header{
 .saltar {
     animation: salto 0.5s ease;
 }
+
+#popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #f1f1f1;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+    @media (max-width: 920px) {
+        /* Estilos para pantallas de 420px o menos */
+        
+        #logo {
+          max-width: 80%;
+          margin: 0 auto;
+        }
+        
+        .navbar-nav {
+          text-align: center;
+        }
+        
+        #inicioSesion, #divUsuario, #divCarrito {
+          margin-top: 1rem;
+          justify-content: center;
+        }
+        
+        .navbar-toggler {
+          margin: 1rem auto;
+          display: block;
+        }
+        
+        
+        
+        .footer .col-2, .footer .col-3 {
+          width: 100%;
+          margin-bottom: 1rem;
+        }
+      }
+      
+    @media (max-width: 520px){
+        #divCarrito .dropdown-menu{
+            width: 90vw;
+            top: -700%;
+            left:-1.8%
+        }
+        .hero h2{
+            font-size: 4em !important;
+        }
+        #todo{
+            width: 80vw;
+        }
+
+        #destacados .producto{
+            width: 100% !important;
+            margin-bottom: 1rem;
+        }
+
+        #busqueda .producto, #wishlist .producto{
+            width: 100% !important;
+            margin-bottom: 1rem;
+        }
+
+        #admin .btn{
+            margin-bottom: 1rem;
+        }
+
+        #admin .productoAdmin .usuarioAdmin{
+            width: 100%;
+        }
+    }
+
+    #admin .productoAdmin .usuarioAdmin{
+        width: 100%;
+    }
+

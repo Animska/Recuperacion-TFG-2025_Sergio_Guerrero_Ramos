@@ -41,7 +41,7 @@ CREATE TABLE Detalle_pedidos (
     Cantidad INT,
     ID_PRODUCTO VARCHAR(6),
     FOREIGN KEY (ID_Pedido) REFERENCES Pedidos(ID_Pedido) ON DELETE CASCADE,
-    FOREIGN KEY (ID_PRODUCTO) REFERENCES Productos(ID_PRODUCTO)
+    FOREIGN KEY (ID_PRODUCTO) REFERENCES Productos(ID_PRODUCTO) ON DELETE CASCADE
 );
 
 -- Crear tabla Wishlists
@@ -57,7 +57,7 @@ CREATE TABLE Wishlist_detalle (
     ID_Wishlist INT,
     ID_PRODUCTO VARCHAR(6),
     FOREIGN KEY (ID_Wishlist) REFERENCES Wishlists(ID_Wishlist) ON DELETE CASCADE,
-    FOREIGN KEY (ID_PRODUCTO) REFERENCES Productos(ID_PRODUCTO)
+    FOREIGN KEY (ID_PRODUCTO) REFERENCES Productos(ID_PRODUCTO) ON DELETE CASCADE
 );
 
 -- Insertar productos en la tabla Productos

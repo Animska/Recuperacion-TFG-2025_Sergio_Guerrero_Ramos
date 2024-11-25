@@ -12,76 +12,84 @@
 </head>
 <body>
     <header class="bg-yellowLego pt-4 sticky-top">
-        <nav class="navbar navbar-expand-lg navbar-dark bg-yellowLego sticky-top shadow-lg py-3">
-            <div class="container-fluid mt-2">
-                <div class="row w-100 align-items-center">
-                    <img src="../IMAGES/logo proto.png" alt="" class=" col-3 offset-1" id="logo">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-yellowLego sticky-top shadow-lg py-3" id="navbar">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">
+                    <img src="../IMAGES/logo proto.png" alt="" class="img-fluid" style="max-width: 100px;">
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
                     aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse justify-content-between col-lg-6" id="navbarNavAltMarkup">
-                    <div class="navbar-nav text-start fw-bolder fs-3 " id="navbar">
-                        <a id="DESCUBRIR" class="nav-link text-white ms-5 mx-3  " href="#">DESCUBRIR</a>
-                        <a id="FAQ" class="nav-link text-white mx-3" href="#footer">FAQ</a>
-                        <a id="SETS" class="nav-link text-white mx-3" href="#">SETS</a>
-                        <a id="MINIFIGURAS" class="nav-link text-white mx-3 MINIFIGURAS" href="#">MINIFIGURAS</a>
+                <div class="collapse navbar-collapse justify-content-between" id="navbarNavAltMarkup">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item fw-bold fs-2"><a id="DESCUBRIR" class="nav-link text-white ms-lg-5 ms-m-0 mx-3" href="#">DESCUBRIR</a></li>
+                        <li class="nav-item fw-bold fs-2"><a id="FAQ" class="nav-link text-white mx-3" href="#footer">FAQ</a></li>
+                        <li class="nav-item fw-bold fs-2"><a id="SETS" class="nav-link text-white mx-3" href="#">SETS</a></li>
+                        <li class="nav-item fw-bold fs-2"><a id="MINIFIGURAS" class="nav-link text-white mx-3 MINIFIGURAS" href="#">MINIFIGURAS</a></li>
+                    </ul>
+
+                    <!-- Botón de inicio de sesión -->
+                    <div id="inicioSesion">
+                        <button type="button" class="btn btn-outline-light fw-bolder"
+                            data-bs-toggle="modal" data-bs-target="#loginModal">INICIAR SESION</button>
                     </div>
 
-                    <div id="inicioSesion" class="col-2 offset-1">
-                        <button type="button" class="btn btn-lg text-light fw-bolder" style="background-color:transparent"  data-bs-toggle="modal" data-bs-target="#loginModal">
-                            INICIAR SESION
-                    </button>
-                    </div>
-                    <div id="divUsuario" class="d-none d-flex align-items-center justify-content-end">
-                        <H4 id="nombreUsuario" class="text-white m-1 fw-bolder"></H4>
+                    <!-- Información del usuario logueado -->
+                    <div id="divUsuario" class="d-none d-flex align-items-center justify-content-md-end">
+                        <h4 id="nombreUsuario" class="text-white m-1 fw-bolder"></h4>
                         <img id="imagenUsuario" src="" alt="" class="rounded-circle m-1">
                         <div class="dropdown m-1">
-                            <button class="btn btn-redLego dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <button class="btn btn-redLego dropdown-toggle" type="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="bi bi-gear-fill"></i>
                             </button>
-                                <ul class="dropdown-menu dropdown-menu-end bg-redLego ">
-                                    <li><a class="dropdown-item text-white" href="#" id="wishlist">Lista de deseos</a></li>
-                                    <li><a class="dropdown-item text-white" href="#" id="pedidos">Pedidos</a></li>
-                                    <li><a class="dropdown-item text-white d-none" href="#" id="opcionesAdmin">Opciones de administrador</a></li>
-                                    <li><a class="dropdown-item text-white" href="#" id="cerrarSesion">Cerrar Sesion</a></li>
-                                </ul>
-                            </div>
-                    </div>
-                </div>
-                <div id="divCarrito" class="dropdown d-flex d-none justify-content-center P-3 align-items-center" style="width: 50px; height: 50px;">
-                    <a href="#" class="text-white dropdown-toggle" data-bs-toggle="dropdown"><i class="bi bi-cart-fill fs-1"></i></a>
-                    <div id="contadorProductos" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                        0
-                    </div>
-                    <div class="dropdown-menu dropdown-menu-end shadow-lg">
-                        <div id="productosCarrito" class="overflow-y-auto">
-                            
+                            <ul class="dropdown-menu dropdown-menu-end bg-redLego">
+                                <li><a class="dropdown-item text-white" href="#" id="wishlist">Lista de deseos</a></li>
+                                <li><a class="dropdown-item text-white" href="#" id="pedidos">Pedidos</a></li>
+                                <li><a class="dropdown-item text-white d-none" href="#" id="opcionesAdmin">Opciones de administrador</a></li>
+                                <li><a class="dropdown-item text-white" href="#" id="cerrarSesion">Cerrar Sesion</a></li>
+                            </ul>
                         </div>
-                        <div id="precioCarrito" class="border-top">
+                    </div>
 
+                    <!-- Carrito de compras -->
+                    <div id="divCarrito" class="dropdown d-flex ms-3 align-items-center justify-content-end position-md-absolute">
+                        <a href="#" class="text-white dropdown-toggle" data-bs-toggle="dropdown"><i
+                                class="bi bi-cart-fill fs-1"></i></a>
+                        <div id="contadorProductos"
+                            class="
+                            position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">0
                         </div>
-                        <div id="botonTramitar" class="justify-content-center d-flex">
-                            <button type="button" class="btn btn-redLego text-light fs-3 fw-bolder"data-bs-toggle="dropdown" data-bs-auto-close="inside">
-                                TRAMITAR PEDIDO
-                            </button>
-                        </div>
-                        
+                        <div class="dropdown-menu dropdown-menu-end shadow-lg">
+                            <div id="productosCarrito" class="overflow-y-auto ">
+                            </div >
+                            <div id="precioCarrito" class="border-top ">
+                            </div >
+                            <div id="botonTramitar" class="justify-content-center d-flex ">
+                                <button type="
+                                    button "class="
+                                    btn btn-redLego text-light fs-3 fw-bolder "data-bs-toggle="
+                                    dropdown "data-bs-auto-close="
+                                    inside ">TRAMITAR PEDIDO
+                                </button >
+                            </div >
+                        </div >
+                    </div >
+                </div >
+            </div >
+        </nav >
+    </header >
 
-                    </div>
-                </div>
-                </div>            
-        </nav>
-    </header>
     <section id="body"></section>
     <footer class="bg-darkblueLego mt-5 p-5 " id="footer">
         <div class="container text-light fw-bold ">
             <div class="row">
-                <div class="col-2  ">
+                <div class="col-2  d-none d-md-block">
                     <img src="../IMAGES/logo proto.png" alt="" class="img-fluid ">
                 </div>
-                <div class="col-3 offset-1 ">
+                <div class="col-4 col-md-3 offset-md-1 ">
                     <ul class="list-unstyled  ">
                         <li class="my-2">QUIENES SOMOS</li>
                         <li class="my-2"><a href="#" class="text-decoration-none text-light">Sostenibilidad</a></li>
@@ -91,7 +99,7 @@
                         <li class="my-2"><a href="#" class="text-decoration-none text-light">Terminos y condiciones</a></li>
                     </ul>
                 </div>
-                <div class="col-3">
+                <div class="col-4 col-md-3">
                     <ul class="list-unstyled ">
                         <li class="my-2">ATENCION AL CLIENTE</li>
                         <li class="my-2"><a href="#" class="text-decoration-none text-light">Contacto</a></li>
@@ -102,7 +110,7 @@
                         
                     </ul>
                 </div>
-                <div class="col-3">
+                <div class="col-4 col-md-3">
                     <ul class="list-unstyled ">
                         <li class="my-2">MAS INFORMACION</li>
                         <li class="my-2"><a href="#" class="text-decoration-none text-light">Tarjetas regalo</a></li>
@@ -115,14 +123,14 @@
                 </div>
             </div>
             <div class="row my-5 ">
-                <div class="col-5">
+                <div class="col-md-5 col-12">
                     <h4 class="fw-bold ">Suscribete a nuestro newsletter</h4>
                     <div class="input-group mb-3">
                         <input type="text" class="form-control" placeholder="Tu correo electronico" aria-label="Recipient's username" aria-describedby="button-addon2">
                         <button class="btn btn-yellowLego" type="button" id="button-addon2">Suscribete</button>
                     </div>
                 </div>
-                <div class="col-4 offset-1 ">
+                <div class="col-md-4 col-12 offset-1 ">
                     <h4 class="fw-bold ">Siguenos</h4>
                     <div class="sociales fs-3 ">
                         <a href="#" class="text-light text-decoration-none"><i class="bi bi-facebook m-2 "></i></a>
